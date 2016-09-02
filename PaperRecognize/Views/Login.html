@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html ng-app="loginApp" ng-controller="loginAppCtrl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>登录</title>
+    <meta charset="utf-8" />
+    <script src="../Scripts/jquery-2.2.3.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <script src="../Scripts/angular.js"></script>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="Login.css" rel="stylesheet" />
+
+    <script>
+        var loginApp = angular.module('loginApp', []);
+        var url = null;
+
+        loginApp.controller('loginAppCtrl', function ($scope, $http) {
+            $scope.loginData = null;
+
+            $scope.login = function () {
+
+                $scope.messageLogin = "正在登录中，请稍等……";
+
+                $scope.loginData.Role = 1;
+                $http.post("http://localhost:61355/api/login", $scope.loginData).success(
+                    function (response) {
+                        if (response == 'success') {
+
+                        }
+                    }
+                    ).error(
+                    function () {
+                        alert("链接错误，请检查您的网络！");
+                    }
+                    );
+            }
+
+
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+    <div id="content">
+        <div id="contentHeader">
+            <h2>Login</h2>
+        </div>
+
+        <!--<div id="contentBody"  ng-controller="loginController">-->
+        <div id="contentBody">
+            <form class="form-horizontal">
+                <fieldset>
+                    <label class="control-label">用户名：</label><br />
+                    <input name="username" ng-model="loginData.Name" type="text" class="form-control" placeholder="请输入您的用户名" />
+                    <br />
+                    <br />
+                    <label class="control-label">密码：</label><br />
+                    <input name="password" ng-model="loginData.Password" type="password" class="form-control" placeholder="请输入密码" />
+                </fieldset>
+            </form>
+        </div>
+
+
+
+        <div id="contentFooter">
+            <a ng-click="login()" class="btn btn-primary btn-lg">登录</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
+

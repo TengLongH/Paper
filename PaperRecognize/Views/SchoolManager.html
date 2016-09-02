@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html ng-app="ngSchoolManager">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SchoolManager</title>
+    <meta charset="utf-8" />
+    <script src="../Scripts/jquery-2.2.3.js"></script>
+    <script src="../Scripts/angular.js"></script>
+    <script src="../Scripts/angular-route.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="SchoolManager.css" rel="stylesheet" />
+
+
+
+   <script>
+        $(document).ready(function () {
+            $('#leftMenu').sidr();
+        });
+    </script>
+
+    <script>
+        angular.module('ngSchoolManager', ['ngRoute'])
+            .controller('homePageController', function ($scope) { $scope.$route = $route; })
+            .controller('academyController', function ($scope) { $scope.$route = $route; })
+            .controller('professorController', function ($scope) { $scope.$route = $route; })
+            .controller('paperController', function ($scope) { $scope.$route = $route;})
+            .controller('personalController', function ($scope) { $scope.$route = $route; })
+            .controller('testController',function($scope) { $scope.$route = $route; })
+            .config(function ($routeProvide) {
+                $routeProvide.
+                    when('/homePage', {
+                        templateUrl: 'schoolManager/homePage.html',
+                        controller: 'homePageController'
+                    })
+                    .when('/academy', {
+                        templateUrl: 'schoolManager/academy.html',
+                        controller: 'academyController'
+                    })
+                    .when('/prefessor', {
+                        templateUrl: 'schoolManager/prefessor.html',
+                        controller: 'professorController'
+                    })
+                    .when('/personal', {
+                        templateUrl: 'schoolManager/personal.html',
+                        controller: 'personalController'
+                    })
+                    .when('/paper', {
+                        templateUrl: 'schoolManager/paper.html',
+                        controller: 'paperController'
+                    })
+                    .when('/test', {
+                        templateUrl: 'routeTest.html',
+                        controller: 'testController'
+                    });
+            });
+
+    </script>
+
+
+</head>
+<body ng-controller="ngSchoolManagerCtrl">
+
+    <div id="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">LOGO</a>
+                </div>
+
+                <div class="navbar-collapse collapse" id="bs-navbar-collapse" aria-expanded="false" style="height: 1px">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">更多</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <img id="userPhoto" src="../image/未标题-1.jpg"
+                                 style="height: 38px; width: 38px; border-radius: 19px; margin-top: 3px" />
+                        </li>
+                        <li class="active"><a href="#">注销</a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </nav>
+    </div>
+
+
+    <div id="content">
+        <div id="sidr">
+            <ul>
+                <li><a href="../Views/SchoolManager.html">首页</a></li>
+                <li><a href="../Views/schoolManager/academy.html">院系管理</a></li>
+                <li><a href="../Views/schoolManager/professor.html">专家管理</a></li>
+                <li><a href="../Views/schoolManager/paper.html">论文管理</a></li>
+                <li><a href="../Views/schoolManager/personal.html">个人中心</a></li>
+
+            </ul>
+
+        </div>
+
+        <div id="mainBody">
+            <div class="mainContent">
+                <a href="../Views/schoolManager/academy.html"><b>院系管理</b></a>
+            </div>
+
+            <div class="mainContent">
+                <a href="../Views/schoolManager/professor.html"><b>专家管理</b></a>
+            </div>
+
+            <div class="mainContent">
+                <a href="../Views/schoolManager/paper.html"><b>论文管理</b></a>
+            </div>
+
+            <div class="mainContent">
+                <a href="../Views/schoolManager/personal.html"><b>个人中心</b></a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>
