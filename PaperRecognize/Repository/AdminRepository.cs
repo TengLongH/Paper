@@ -11,10 +11,45 @@ using System.Text;
 
 namespace PaperRecognize.Repository
 {
-    public class AdminRepository
+    public class AdminRepository:UserRepository
     {
-        private DBModel context = new DBModel();
 
+        public IEnumerable<GetConfirmDTO> GetConfirmPapers()
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(@"select p.Id as Id, p.PaperName as PaperName,ap.Id as AuthorPersonId 
+                        from Paper p, Author a,( select * from Author_Person where status = 0 ) ap
+                        where ap.AuthorId = a.Id and a.PaperId = p.Id;");
+
+            var result = context.Database
+               .SqlQuery<GetConfirmDTO>(sql.ToString());
+            if (result != null)
+            {
+                return result.ToList<GetConfirmDTO>();
+            }
+            else
+            {
+                return new List<GetConfirmDTO>();
+            }
+        }
+        public IEnumerable<GetConfirmDTO> GetCancelPapers()
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(@"select p.Id as Id, p.PaperName as PaperName,ap.Id as AuthorPersonId 
+                        from Paper p, Author a,( select * from Author_Person where status = {0}) ap
+                        where ap.AuthorId = a.Id and a.PaperId = p.Id;");
+
+            var result = context.Database
+               .SqlQuery<GetConfirmDTO>(sql.ToString(), (int)AuthorPersonStatus.RIGHT);
+            if (result != null)
+            {
+                return result.ToList<GetConfirmDTO>();
+            }
+            else
+            {
+                return new List<GetConfirmDTO>();
+            }
+        }
         public List<GetOnePaperDTO> GetClaimPaper()
         {
             StringBuilder sql = new StringBuilder();
@@ -26,6 +61,16 @@ namespace PaperRecognize.Repository
             return list.ToList();
         }
 
+        public string AssignedPaper( int authorPersonId, int personNo )
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append(@"select * from Author_Person where AuthorId in( 
+                        select AuthorId from Author_Person where Id = '54643')");
+            var authorPersons = context.Database.SqlQuery<Author_Person>(sql.ToString(), authorPersonId ).ToList();
+            
+
+            return "success";
+        }
         public List<AuthorDTO> GetPaperAuthors(int paperId)
         {
             StringBuilder sql = new StringBuilder();
@@ -44,7 +89,7 @@ namespace PaperRecognize.Repository
             return authors;
         }
 
-        public List<PersonVO> changeToPersonVO( List<Author_Person> aps )
+        private List<PersonVO> changeToPersonVO( List<Author_Person> aps )
         {
             List<PersonVO> pvos = new List<PersonVO>();
             foreach (Author_Person ap in aps)
@@ -71,6 +116,18 @@ namespace PaperRecognize.Repository
                 pvos.Add(vo);
             }
             return pvos;
+        }
+
+        public void CancelAuthorPerson(CancelDTO dto)
+        {
+            Author_Person item = context.Author_Person.FirstOrDefault(ap => ap.Id == dto.AuthorPersonId);
+            item.status = (int)AuthorPersonStatus.WRONG;
+            Author_Person claim = new Author_Person();
+            claim.status = (int)AuthorPersonStatus.NEEDCLAIM;
+            claim.AuthorId = item.AuthorId;
+            claim.Name = "not found";
+            context.Author_Person.Add(claim);
+            context.SaveChanges();
         }
     }
 }

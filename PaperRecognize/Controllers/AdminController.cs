@@ -9,28 +9,57 @@ using System.Web;
 using System.Web.Http;
 using PaperRecognize.Repository;
 using PaperRecognize.DTOs.AndroidDTO;
+using System.Text;
 
 namespace PaperRecognize.Controllers
 {
     public class AdminController : ApiController
     {
         private AdminRepository repository = new AdminRepository() ; 
-        [Route("api/admin/claim")]
+        [Route("api/admin/claim/get")]
         public IEnumerable<GetOnePaperDTO> GetClaimPaper()
         {
-            var session = HttpContext.Current.Session;
-            //String username = session["username"].ToString();
-            //int role = Int32.Parse(session["role"].ToString());
-            string username = "1993027";
-            int role = 1;
-            if (role != (int)UserRole.DEPTADMIN) return null;
             IEnumerable<GetOnePaperDTO> list = repository.GetClaimPaper();
             return list;
         }
-        [Route("api/admin/paperauthors/{paperId}")]
+        [Route("api/admin/paperauthors/get/{paperId}")]
         public IEnumerable<AuthorDTO> GetPaperAuthors( int paperId )
         {
             return repository.GetPaperAuthors( paperId );
         }
+        [Route("api/admin/confirm/get")]
+        public IEnumerable<GetConfirmDTO> GetConfrimPaper()
+        {
+            IEnumerable<GetConfirmDTO> list = repository.GetConfirmPapers();
+            return list;
+        }
+
+        [Route("api/admin/cancel/get")]
+        public IEnumerable<GetConfirmDTO> GetCancelPaper()
+        {
+            IEnumerable<GetConfirmDTO> list = repository.GetCancelPapers();
+            return list;
+        }
+        [Route("api/admin/claim/post")]
+        public HttpResponseMessage PostClaimPaper( ClaimDTO dto )
+        {
+            //repository.ClaimAuthorPerson(dto);
+            return new HttpResponseMessage() { Content = new StringContent("success") };
+        }
+
+        [Route("api/admin/confirm/post")]
+        public HttpResponseMessage PostConfirmPaper(ConfirmDTO dto)
+        {
+            repository.ConfirmAuthorPerson(dto);
+            return new HttpResponseMessage() { Content = new StringContent("success") };
+        }
+
+        [Route("api/admin/cancel/post")]
+        public HttpResponseMessage PostCancelPaper( CancelDTO dto)
+        {
+            repository.CancelAuthorPerson(dto);
+            return new HttpResponseMessage() { Content = new StringContent("success") };
+        }
+
     }
 }

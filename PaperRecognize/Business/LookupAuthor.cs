@@ -100,6 +100,10 @@ namespace PaperRecognize.Business
             }
             //将搜索到的候选人添加进数据库
             string personSql = "select NameCN from Person where PersonNo={0}";
+
+            //如果只找到一个人，将状态设置为待确认
+            //如果找到多个人，将所有人的状态设置为已认领
+            var status = personNos.Count == 1 ? AuthorPersonStatus.CONFIRM : AuthorPersonStatus.CLAIM;
             foreach (string no in personNos)
             {
                 string[] name = context.Database.SqlQuery<string>(personSql, no).ToArray();
@@ -109,12 +113,10 @@ namespace PaperRecognize.Business
                     ap.AuthorId = author.Id;
                     ap.PersonNo = no;
                     ap.Name = name[0];
-                    ap.status = (int)AuthorPersonStatus.CONFIRM;
+                    ap.status = (int)status;
                     context.Author_Person.Add(ap);
                 }
-                
             }
-         
         }
 
         private List<string> GetPersonFromShool(Author author)

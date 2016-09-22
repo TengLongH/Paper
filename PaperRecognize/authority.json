@@ -1,0 +1,22 @@
+﻿{
+  "role": {
+    "common": [
+      "/api/user/mypaper/get",
+      "/api/user/confirm/get",
+      "/api/user/claim/get",
+      "/api/user/paper/detail",
+      "/api/user/myclaim/get",
+      "/api/user/confirm/post",
+      "/api/user/claim/post"
+    ],
+    "admin": [
+      "/api/admin/claim/get",
+      "/api/admin/paperauthors/get",
+      "/api/admin/confirm/get",
+      "/api/admin/cancel/get",
+      "/api/admin/claim/post",
+      "/api/admin/confirm/post",
+      "/api/admin/confirm/post"
+    ]
+  }
+}

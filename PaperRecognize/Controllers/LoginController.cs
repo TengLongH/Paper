@@ -16,19 +16,24 @@ namespace PaperRecognize.Controllers
         private DBModel context = new DBModel();
 
         [Route("api/login")]
-        public HttpResponseMessage PostLogin( LoginDTO dto )
+        public HttpResponseMessage PostLogin(LoginDTO dto)
         {
-            if (null == dto.Name || null == dto.Password )
+            if (null == dto.Name || null == dto.Password)
             {
-                return Util.toJson("username password can't be empty");
+                return new HttpResponseMessage() { Content = new StringContent("wrong") };
             }
             User user = context.User.FirstOrDefault(u => u.Role == dto.Role && u.Name == dto.Name && u.Password == dto.Password);
-            if (null == user ) return Util.toJson( "can't find the user");
+            if (null == user)
+                return Util.toJson("wrong");
             var session = HttpContext.Current.Session;
             session.Add("username", user.Name);
             session.Add("role", user.Role);
-            return Util.toJson("success");
             
+            if (user.Role == 0)
+                return new HttpResponseMessage() { Content = new StringContent("common") };
+            if (user.Role == 1)
+                return new HttpResponseMessage() { Content = new StringContent("depart") };
+            return new HttpResponseMessage() { Content=new StringContent("wrong")};
         }
     }
 }

@@ -9,7 +9,7 @@ namespace PaperRecognize.DTOs.AndroidDTO
     {
 
         public string Username { get; set; }
-        public List<Int32> AuthorPersonIds { get; set; }
+        public int AuthorPersonId { get; set; }
         public bool Belongs { get; set; }
 
     }

@@ -18,72 +18,12 @@ namespace PaperRecognize.Repository
 {
     public class UserRepository
     {
-        private DBModel context = new DBModel();
+        protected DBModel context = new DBModel();
 
         public UserRepository()
         {
 
         }
-
-        public IEnumerable<GetPersonDTO> GetManager()
-        {
-            List<GetPersonDTO> persons = null;
-            string sql = "select PersonNo,NameCN,NameEN,Sex,Mobile,Email,DepartmentId from Person,[User] where [User].Role=1 and [User].Name=Person.PersonNo";
-            persons = context.Database.SqlQuery<GetPersonDTO>(sql).ToList();
-            return persons;
-        }
-
-        public string AddUser(AddUserDTO dto)
-        {
-            if (null == dto) return "request is usless";
-            var person = context.Person.FirstOrDefault(p => p.PersonNo == dto.Name);
-            if (null == person)
-                return "this man is not our school teacher";
-            var user = context.User.FirstOrDefault(u => u.Name == dto.Name && u.Role == dto.Role);
-            if (null != user)
-                return "user has exist";
-            
-            if (!AcceptPassword( dto.Password))
-                return "password contains digital alphabet and underline the length is 6-20";
-            if (!(dto.Role == (int)UserRole.DEPTADMIN || dto.Role == (int)UserRole.COMMON))
-            {
-                return "the role is error";
-            }
-            var depart = context.Department.FirstOrDefault(d => d.Id == dto.DepartmentId);
-            if (depart == null)
-                return "can't find the department";
-            User newUser = Mapper.Map<User>( dto );
-            context.User.Add( newUser );
-            context.SaveChanges();
-            return "success";
-        }
-
-        public string DeleteUser(GetUserDTO dto)
-        {
-            var user = context.User.First(u => u.Name == dto.Name && u.Role == dto.Role);
-            if (null != user)
-            {
-                context.User.Remove(user);
-                context.SaveChanges();
-                return "success";
-            }
-            return "can't find the user";
-        }
-
-        public string UpdateUser(UpdateUserDTO dto)
-        {
-            var user = context.User.First(u => u.Name == dto.Name && u.Role == dto.Role);
-            if (null == user)
-                return "can't find the user";
-           
-            if( !AcceptPassword( dto.Password ) )
-                return "password contains digital alphabet and underline the length is 6-20";
-
-            user.Password = dto.Password;
-            context.SaveChanges();
-            return "success";
-        }
-
         internal List<GetClaimDTO> GetMyClaimPaper(string username )
         {
             StringBuilder sql = new StringBuilder();
@@ -97,29 +37,14 @@ namespace PaperRecognize.Repository
 
         }
 
-        private bool AcceptPassword(string password)
-        {
-            if (null == password) return false;
-            Regex reg = new Regex(@"\b(\w){6,20}\b");
-            return reg.IsMatch(password);
-        }
-
+       
         internal IEnumerable<GetOnePaperDTO> GetMyPaper(string username)
         {
             StringBuilder sql = new StringBuilder();
-            /*
-            sql.Append("select * from Paper where Id in( ");
-            sql.Append("select PaperId from Author where Id in (");
-            sql.Append("select AuthorId from Author_Person where PersonNo ='");
-            sql.Append( username );
-            sql.Append( "and status = ");
-            sql.Append( (int)AuthorPersonStatus.RIGHT );
-            sql.Append("'));");
-            */
+           
             sql.Append(@"select * from Paper where Id in(
                         select PaperId from Author where Id in (
                         select AuthorId from Author_Person where PersonNo ={0} and status = {1}));");
-            //List<GetOnePaperDTO> papers = context.Database.SqlQuery<GetOnePaperDTO>(sql.ToString()).ToList();
             List<GetOnePaperDTO> papers = context.Database
                 .SqlQuery<GetOnePaperDTO>(sql.ToString(), username,(int)AuthorPersonStatus.RIGHT )
                 .ToList();
@@ -129,11 +54,7 @@ namespace PaperRecognize.Repository
         public IEnumerable<GetClaimDTO> GetClaimAuthors()
         {
             StringBuilder sql = new StringBuilder();
-            /*
-            sql.Append("select Author.Id as AuthorId,NameEN as AuthorName,Paper.Id as Id,PaperName from Author, Paper where ");
-            sql.Append("Author.Id in ( select AuthorId from Author_Person where status =  ) and ");
-            sql.Append("Author.PaperId = Paper.Id");
-            */
+         
             sql.Append(@"select ap.Id as AuthorPersonId,a.NameEN as AuthorName,p.Id as Id,PaperName 
                         from Author a, Paper p,(select * from Author_Person where status = {0} ) ap 
                         where ap.AuthorId = a.Id and a.PaperId = p.Id;");
@@ -169,30 +90,147 @@ namespace PaperRecognize.Repository
             return paperDetail;
         }
 
-        public void confirmAuthorPerson(ConfirmDTO dto)
+        public void ConfirmAuthorPerson(ConfirmDTO dto)
         {
             List<Author_Person> aps = context.Author_Person
-                .Where( ap=> dto.AuthorPersonIds.Contains(ap.Id ))
+                .Where( ap=> dto.AuthorPersonId == ap.Id )
                 .ToList();
             AuthorPersonStatus statu = dto.Belongs ? AuthorPersonStatus.RIGHT:AuthorPersonStatus.WRONG;
-            aps.ForEach(ap => { ap.status = (int?)statu; });
+            Author_Person item = context.Author_Person.FirstOrDefault( ap=>ap.Id == dto.AuthorPersonId);
+
+            if (dto.Belongs)
+            {
+                item.status = (int)AuthorPersonStatus.RIGHT;
+            }
+            else
+            {
+                item.status = (int)AuthorPersonStatus.WRONG;
+                Author_Person nap = new Author_Person();
+                nap.AuthorId = item.AuthorId;
+                nap.Name = "未找到";
+                nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                context.Author_Person.Add(nap);
+            }
             context.SaveChanges();
         }
 
-        public void claimAuthorPerson(ClaimDTO dto)
+        public void ClaimAuthorPerson(ClaimDTO dto)
         {
             Person person = context.Person.FirstOrDefault(p => p.PersonNo == dto.Username);
-            AuthorPersonStatus statu = dto.Claim ? AuthorPersonStatus.CLAIM : AuthorPersonStatus.REJECT;
-            List<Author_Person> aps = context.Author_Person
-                .Where(ap => dto.AuthorPersonIds.Contains(ap.Id))
-                .ToList();
-            aps.ForEach(ap => {
-                ap.status = (int?)statu;
-                ap.Name = person.NameCN;
-                ap.PersonNo = person.PersonNo;
-            });
-
+            Author_Person item = context.Author_Person.FirstOrDefault( ap=>ap.Id == dto.AuthorPersonId );
+            //如果为true，将论文分配给他
+            if (dto.Claim)
+            {
+                if (item.status != (int)AuthorPersonStatus.CLAIM)
+                {
+                    return;
+                }
+                var authorPersons = context.Author_Person
+                    .Where( ap=>ap.AuthorId == item.AuthorId )
+                    .ToList();
+                for( int i = 0; i <authorPersons.Count; i++ )
+                {
+                    var ap = authorPersons[i];
+                    if (ap.status == (int)AuthorPersonStatus.CONFIRM)
+                    {
+                        ap.status = (int)AuthorPersonStatus.WRONG;
+                    }
+                    else if (ap.status == (int)AuthorPersonStatus.RIGHT)
+                    {
+                        ap.status = (int)AuthorPersonStatus.WRONG;
+                    }
+                    else if (ap.status == (int)AuthorPersonStatus.CLAIM)
+                    {
+                        ap.status = (int)AuthorPersonStatus.REJECT;
+                    }
+                    else if (ap.status == (int)AuthorPersonStatus.NEEDCLAIM)
+                    {
+                        authorPersons.Remove(ap);
+                        i--;
+                    }
+                }
+                item.Name = person.NameCN;
+                item.PersonNo = person.PersonNo;
+                item.status = (int)AuthorPersonStatus.RIGHT;
+            }
+            else
+            {
+                item.status = (int)AuthorPersonStatus.REJECT;
+                context.SaveChanges();
+                int count = context.Author_Person
+                        .Where(cap => cap.AuthorId == item.AuthorId && cap.status == (int)AuthorPersonStatus.CLAIM)
+                        .ToList()
+                        .Count();
+               
+                if (count <= 0)
+                {
+                    Author_Person nap = new Author_Person();
+                    nap.AuthorId = item.AuthorId;
+                    nap.Name = "未找到";
+                    nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                    context.Author_Person.Add(nap);
+                }
+            }
             context.SaveChanges();
         }
+
+
+        public string AddUser(AddUserDTO dto)
+        {
+            if (null == dto) return "request is usless";
+            var person = context.Person.FirstOrDefault(p => p.PersonNo == dto.Name);
+            if (null == person)
+                return "this man is not our school teacher";
+            var user = context.User.FirstOrDefault(u => u.Name == dto.Name && u.Role == dto.Role);
+            if (null != user)
+                return "user has exist";
+
+            if (!AcceptPassword(dto.Password))
+                return "password contains digital alphabet and underline the length is 6-20";
+            if (!(dto.Role == (int)UserRole.DEPTADMIN || dto.Role == (int)UserRole.COMMON))
+            {
+                return "the role is error";
+            }
+            var depart = context.Department.FirstOrDefault(d => d.Id == dto.DepartmentId);
+            if (depart == null)
+                return "can't find the department";
+            User newUser = Mapper.Map<User>(dto);
+            context.User.Add(newUser);
+            context.SaveChanges();
+            return "success";
+        }
+
+        public string DeleteUser(GetUserDTO dto)
+        {
+            var user = context.User.First(u => u.Name == dto.Name && u.Role == dto.Role);
+            if (null != user)
+            {
+                context.User.Remove(user);
+                context.SaveChanges();
+                return "success";
+            }
+            return "can't find the user";
+        }
+
+        public string UpdateUser(UpdateUserDTO dto)
+        {
+            var user = context.User.First(u => u.Name == dto.Name && u.Role == dto.Role);
+            if (null == user)
+                return "can't find the user";
+
+            if (!AcceptPassword(dto.Password))
+                return "password contains digital alphabet and underline the length is 6-20";
+
+            user.Password = dto.Password;
+            context.SaveChanges();
+            return "success";
+        }
+        private bool AcceptPassword(string password)
+        {
+            if (null == password) return false;
+            Regex reg = new Regex(@"\b(\w){6,20}\b");
+            return reg.IsMatch(password);
+        }
+
     }
 }

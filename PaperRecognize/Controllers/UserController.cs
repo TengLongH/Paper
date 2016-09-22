@@ -19,88 +19,63 @@ namespace PaperRecognize.Controllers
     {
         public static int Claim_Page_Size = 5;
         private UserRepository repository;
-
+        private Utils.Authority authority = Utils.Authority.GetInstance();
         public UserController() 
         {
             repository = new UserRepository();
         }
-        [Route("api/user/mypaper")]
+        [Route("api/user/mypaper/get")]
         public IEnumerable<GetOnePaperDTO> GetMyPaper() 
         {
-            var session = HttpContext.Current.Session;
-            //String username = session["username"].ToString();
-            //int role = Int32.Parse(session["role"].ToString());
-            string username = "2012304";
-            int role = 0;
-            if( role != (int)UserRole.COMMON )return null;
-            IEnumerable<GetOnePaperDTO> list = repository.GetMyPaper(username);
+           
+            object username = HttpContext.Current.Session["username"];
+            IEnumerable<GetOnePaperDTO> list = repository.GetMyPaper(username.ToString());
             return list;
         }
 
-        [Route("api/user/confirm")]
-        public HttpResponseMessage GetConfirmPapers() {
-            var session = HttpContext.Current.Session;
-            //String username = session["username"].ToString();
-            //int role = Int32.Parse(session["role"].ToString());
-            //if (role != (int)UserRole.COMMON) return null;
+        [Route("api/user/confirm/get")]
+        public HttpResponseMessage GetConfirmPapers()
+        {
+           
+
             return Util.toJson(repository.GetConfirmPapers("2012304"));
         }
-        [Route("api/user/claim")]
+        [Route("api/user/claim/get")]
         public HttpResponseMessage GetClaimPapers()
         {
+           
             return Util.toJson(repository.GetClaimAuthors());
         }
-        [Route("api/user/paper/{paperId}")]
+        [Route("api/user/paper/detail/{paperId}")]
         public HttpResponseMessage GetPaperDetail( int paperId )
         {
+           
             return Util.toJson(repository.GetPaperDetail(paperId));
         }
-        [Route("api/user/confirm/request")]
-        public HttpResponseMessage PostConfirmPaper( ConfirmDTO dto ) {
-
-            repository.confirmAuthorPerson( dto );
-            return Util.toJson("success");
-        }
-        [Route("api/user/claim/request")]
-        public HttpResponseMessage PostClaimPaper(ClaimDTO dto)
+        [Route("api/user/myclaim/get")]
+        public HttpResponseMessage GetMyClaimPaper()
         {
-
-            repository.claimAuthorPerson( dto );
-            return Util.toJson("success");
-        }
-        [Route("api/user/myclaim")]
-        public HttpResponseMessage GetMyClaimPaper(ClaimDTO dto)
-        {
-
-            var list = repository.GetMyClaimPaper("2012304");
+            var name = HttpContext.Current.Session["username"];
+            var list = repository.GetMyClaimPaper(name.ToString());
             return Util.toJson(list);
         }
 
-        [Route("api/managers")]
-        public IEnumerable<GetPersonDTO> GetManagers()
-        {
-            IEnumerable<GetPersonDTO> managers;
-            managers = repository.GetManager();
-            return managers;
-        }
 
-        [Route("api/user/{name}/{role}")]
-        public string DeleteUser( string name, int role ) 
+        [Route("api/user/confirm/post")]
+        public HttpResponseMessage PostConfirmPaper( ConfirmDTO dto )
         {
-            return "";
-            //return repository.DeleteUser( dto );
-        }
 
-        [Route("api/user")]
-        public string PostUser( AddUserDTO dto )
-        {
-            return repository.AddUser(dto);
+            dto.Username = HttpContext.Current.Session["username"].ToString();
+            repository.ConfirmAuthorPerson( dto );
+            return new HttpResponseMessage() { Content= new StringContent("success")};
         }
-
-        [Route("api/user")]
-        public string PutUser(UpdateUserDTO dto)
+        [Route("api/user/claim/post")]
+        public HttpResponseMessage PostClaimPaper(ClaimDTO dto)
         {
-            return repository.UpdateUser( dto );
+            dto.Username = HttpContext.Current.Session["username"].ToString();
+            repository.ClaimAuthorPerson( dto );
+            return new HttpResponseMessage() { Content = new StringContent("success") };
         }
+       
     }
 }
