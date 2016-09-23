@@ -8,9 +8,9 @@ namespace PaperRecognize.DTOs
     public class UpdateAuthorPersonDTO
     {
         public int Id { get; set; }
-        public int? AuthorId { get; set; }
+        public int AuthorId { get; set; }
         public string PersonNo { get; set; }
-        public string Name { get; set; }
+        public string NameEN { get; set; }
         public AuthorPersonStatus status { get; set; }
 
     }

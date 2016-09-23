@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="../../Content/bootstrap.css" rel="stylesheet" />
+    <script src="../../Scripts/jquery-3.1.0.js"></script>
+    <script src="../../Scripts/bootstrap.js"></script>
+    <script src="../../Scripts/angular.js"></script>
+</head>
+<body>
+    <div class="container row">
+        <div id="paperDetail" class="col-lg-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ID:</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.Id}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ChineseName</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.ChineseName}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">DepartmentName</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.DepartmentName}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">LabName</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.LabName}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">PaperName</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.PaperName}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">JournalName</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.JournalName}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">AuthorKeyWord</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.AuthorKeyWord}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">KeyWords</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.KeyWords}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Abstract</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.Abstract}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">AuthorsAddress</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.AuthorsAddress}}
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">PublichDate</h3>
+                </div>
+                <div class="panel-body">
+                    {{paperDetail.PublishDate}}
+                </div>
+            </div>
+        </div>
+
+        <div id="paperPerson" class="col-lg-8">
+            <div ng-repeat="authorDetail in authorDetails">
+                <h4>{{authorDetail.NameEN}} {{authorDetail.Department}} Ordinal: {{authorDetail.Ordinal}}</h4>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>PersonNo</th>
+                            <th>NameCN</th>
+                            <th>NameEN</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="author in authorDetail.Authors" class="success">
+                            <td>
+                                <select ng-model="changeAuthorPerson.Status"
+                                        ng-init="changeAuthorPerson.Status = author.Status;changeAuthorPerson.Id = author.AuthorPersonId;changeAuthorPerson.AuthorId=authorDetail.Id;">
+
+                                    <option ng-selected="changeAuthorPerson.Status == 0" value="0">Confirm</option>
+                                    <option ng-selected="changeAuthorPerson.Status == 1" value="1">Right</option>
+                                    <option ng-selected="changeAuthorPerson.Status == 2" value="2">Wrong</option>
+                                    <option ng-selected="changeAuthorPerson.Status == 3" value="3">NeedClaim</option>
+                                    <option ng-selected="changeAuthorPerson.Status == 4" value="4">Claim</option>
+                                    <option ng-selected="changeAuthorPerson.Status == 5" value="5">Reject</option>
+
+                                </select>
+                            </td>
+                            <td>
+                                <p ng-show="clickedPersonNo == 0" ng-click="clickedPersonNo = 1" ng-init="clickedPersonNo = 0">{{author.PersonNo}}</p>
+                                <input ng-show="clickedPersonNo == 1" ng-model="changeAuthorPerson.PersonNo" ng-init="changeAuthorPerson.PersonNo = author.PersonNo" placeholder="{{author.PersonNo}}" type="text" style="width: 70px" />
+                            </td>
+                            <td>
+                                <p ng-click="clickedNameCN = 1" ng-init="clickedNameCN = 0" ng-show="clickedNameCN == 0">{{author.NameCN}}</p>
+                                <input ng-show="clickedNameCN == 1" ng-model="changeAuthorPerson.Name" ng-init="changeAuthorPerson.NameCN = author.NameCN" placeholder="{{author.NameCN}}" type="text" style="width: 45px" />
+                            </td>
+                            <td>
+                                <p ng-click="clickedNameEN = 1" ng-init="clickedNameEN = 0" ng-show="clickedNameEN == 0">{{author.NameEN}}</p>
+                                <input ng-show="clickedNameEN == 1" ng-model="changeAuthorPerson.NameEN" ng-init="changeAuthorPerson.NameEN = author.NameEN" placeholder="{{author.NameEN}}" type="text" />
+                            </td>
+                            <td>
+                                <p ng-click="clickedMobile = 1" ng-init="clickedMobile = 0" ng-show="clickedMobile == 0">{{author.Mobile}}</p>
+                                <input ng-show="clickedMobile == 1" ng-model="changeAuthorPerson.Mobile" ng-init="changeAuthorPerson.Mobile = author.Mobile" placeholder="{{author.Mobile}}" type="text" />
+                            </td>
+                            <td>
+                                <p ng-click="clickedEmail = 1" ng-init="clickedEmail = 0" ng-show="clickedEmail == 0">{{author.Email}}</p>
+                                <input ng-show="clickedEmail == 1" ng-model="changeAuthorPerson.Email" ng-init="changeAuthorPerson.Email = author.Email" placeholder="{{author.Email}}" type="text" />
+                            </td>
+                            <td class="row" style="text-align: center">
+                                <div class="col-lg-2"></div>
+                                <a ng-click="authorSubmit(changeAuthorPerson)" class="btn btn-success btn-block col-lg-4">Submit</a>
+                                <div class="col-lg-2"></div>
+                            </td>
+                            <td>{{changeAuthorPerson}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

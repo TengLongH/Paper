@@ -10,10 +10,6 @@
     <script src="../../Scripts/bootstrap.js"></script>
     <link href="../../Content/bootstrap.css" rel="stylesheet" />
     <link href="AdminPaperMain.css" rel="stylesheet" />
-
-
-
-
 </head>
 <body ng-controller="ngAdminPaperMainCtrl">
 
@@ -53,6 +49,94 @@
                 }
 
                 $scope.authorSubmit = function (changeAuthorPerson)  {
+                    var url = "http://localhost:61355/api/admin/authorperson";
+                    $http({
+                        method: 'POST',
+                        url: url,
+                        data: changeAuthorPerson
+                    }).success(
+                        function () {
+                            self.location.reload();
+                        }
+                    ).error(
+                        function () {
+                            alert("通信错误！请检查您的网络！");
+                        }
+                    );
+                };
+
+
+
+
+                $scope.paperClaim = function (apId) {
+                    $http({
+                        method: 'POST',
+                        url: 'http://localhost:61355/api/admin/claim/post',
+                        data: {
+                            "AuthorPersonId": apId,
+                            "Claim": "true"
+                        }
+                    }).success(
+                    function (response) {
+                        if (response.toString() == "success") {
+                            //按钮置灰
+                        }
+                    }
+                    ).error(
+                        function () {
+                            alert("通信失败！请检查您的网络！")
+                        }
+                    );
+                }
+
+
+
+
+
+            })
+            //search
+            .controller("ngAdminSearchPaperCtrl",
+            function ($http, $scope) {
+
+                $scope.paperDetail = null;
+
+                $scope.searchPaperSubmit = function (searchPaper) {
+                    var url = "http://localhost:61355/api/admin/search";
+                    $http({
+                        method: 'POST',
+                        url: url,
+                        data: searchPaper
+                    }).success(
+                        function (response) {
+                            $scope.papers = response;
+                        }
+                    ).error(
+                        function () {
+                            alert("通信错误！请检查您的网络！");
+                        }
+                    );
+                }
+
+
+
+                $scope.showDetail = function (paperId) {
+                    var paperUrl = "http://localhost:61355/api/user/paper/detail/" + paperId;
+                    $http.get(paperUrl)
+                    .success(
+                        function (response) {
+                            $scope.paperDetail = response;
+                        }
+                    )
+                    var authorUrl = "http://localhost:61355/api/admin/paperauthors/get/" + paperId;
+                    $http.get(authorUrl)
+                    .success(
+                        function (response) {
+                            $scope.authorDetails = response;
+                        }
+                    )
+                }
+
+                $scope.authorSubmit = function (changeAuthorPerson) {
                     var url = "http://localhost:61355/api/admin/authorperson";
                     $http({
                         method: 'POST',
@@ -158,15 +242,14 @@
                         templateUrl: "AdminConfirmPaper.html",
                         controller: "ngAdminConfirmPaperCtrl"
                     })
+                    .when("/adminsearchpaper", {
+                        templateUrl: "AdminSearchPaper.html",
+                        controller: "ngAdminSearchPaperCtrl"
+                    })
                     .otherwise({
                         redirectTo: "/"
                     });
             });
-
-
-
-
-
     </script>
 
 
@@ -213,6 +296,7 @@
                 <li><a href="">首页</a></li>
                 <li><a href="#adminclaimpaper">admin_claim_paper</a></li>
                 <li><a href="#adminconfirmpaper">admin_paper_confirm</a></li>
+                <li><a href="#adminsearchpaper">admin_paper_search</a></li>
             </ul>
         </div>
 

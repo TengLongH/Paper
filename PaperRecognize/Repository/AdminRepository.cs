@@ -97,22 +97,15 @@ namespace PaperRecognize.Repository
                 AuthorPersonVO vo = new AuthorPersonVO();
                 vo.AuthorPersonId = ap.Id;
                 vo.Status = (int)ap.status;
-                if (vo.Status != (int)AuthorPersonStatus.NEEDCLAIM)
+                var person = context.Person.FirstOrDefault(p => p.PersonNo == ap.PersonNo);
+                if (null != person)
                 {
-                    var person = context.Person.FirstOrDefault(p => p.PersonNo == ap.PersonNo);
-                    if (null != person)
-                    {
-                        vo.PersonNo = person.PersonNo;
-                        vo.NameCN = person.NameCN;
-                        vo.NameEN = person.NameEN;
-                        vo.Mobile = person.Mobile;
-                        vo.Email = person.Email;
-                    }
+                    vo.PersonNo = person.PersonNo;
+                    vo.NameEN = person.NameEN;
+                    vo.Mobile = person.Mobile;
+                    vo.Email = person.Email;
                 }
-                else
-                {
-                    vo.NameCN = "未找到";
-                }
+                vo.NameCN = ap.Name;
                 pvos.Add(vo);
             }
             return pvos;

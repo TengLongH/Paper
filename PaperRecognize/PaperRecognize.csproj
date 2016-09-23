@@ -1139,8 +1139,10 @@
     <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <Content Include="Views\adminPaper\AdminClaimPaper.html" />
     <Content Include="Views\adminPaper\AdminConfirmPaper.html" />
+    <Content Include="Views\adminPaper\AdminPaperDetail.html" />
     <Content Include="Views\adminPaper\AdminPaperMain.css" />
     <Content Include="Views\adminPaper\AdminPaperMain.html" />
+    <Content Include="Views\adminPaper\AdminSearchPaper.html" />
     <Content Include="Views\Login.css" />
     <Content Include="Views\Login.html" />
     <Content Include="Views\userPaper\UserPaperClaim.html" />

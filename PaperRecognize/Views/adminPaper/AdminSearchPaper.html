@@ -1,20 +1,35 @@
 ﻿<!DOCTYPE html>
-<html ng-app="ngAdminClaimPaperApp">
+<html ng-app="ngAdminSearchPaperApp">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <meta charset="utf-8" />
-    <script src="../../Scripts/jquery-3.1.0.js"></script>
-    <script src="../../Scripts/bootstrap.js"></script>
-    <script src="../../Scripts/angular.js"></script>
-    <link href="../../Content/bootstrap.css" rel="stylesheet" />
+	<meta charset="utf-8" />
 </head>
-<body ng-controller="ngAdminClaimPaperCtrl">
+<body ng-controller="ngAdminSearchPaperCtrl">
 
     <script>
-        var userPaperClaim = angular.module('ngAdminClaimPaperApp', []);
+        var adminSearchPaperApp = angular.module('ngAdminSearchPaperApp', []);
     </script>
 
+    <div style="height:40px"></div>
+
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-3">
+            <input ng-model="searchPaper.PaperName" placeholder="论文名" type="text"/>
+        </div>
+        <div class="col-lg-3">
+            <input ng-model="searchPaper.AuthorName" placeholder="作者名" type="text"/>
+        </div>
+        <div class="col-lg-3">
+            <!--后期换成下拉列表-->
+            <input ng-model="searchPaper.Depart" placeholder="院系" type="text"/>
+        </div>
+        <div class="col-lg-1">
+            <a class="btn btn-primary" ng-click="searchPaperSubmit(searchPaper)">搜索</a>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
     <br />
     <table class="table table-striped table-hover">
         <thead>
@@ -155,7 +170,7 @@
                                 <tbody>
                                     <tr ng-repeat="author in authorDetail.Authors" class="success">
                                         <td>
-                                            <select ng-model="changeAuthorPerson.Status" 
+                                            <select ng-model="changeAuthorPerson.Status"
                                                     ng-init="changeAuthorPerson.Status = author.Status;changeAuthorPerson.Id = author.AuthorPersonId;changeAuthorPerson.AuthorId=authorDetail.Id;">
 
                                                 <option ng-selected="changeAuthorPerson.Status == 0" value="0">Confirm</option>
@@ -205,6 +220,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>

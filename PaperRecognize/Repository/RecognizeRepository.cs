@@ -29,7 +29,7 @@ namespace PaperRecognize.Repository
                 {
                     UpdatePersonNo( ap, update );
                 }
-                else if ( ap.Name != update.Name)
+                else if ( ap.Name != update.NameEN)
                 {
                     UpdateName(ap, update);
                 }
@@ -61,7 +61,7 @@ namespace PaperRecognize.Repository
                 if (update.status == AuthorPersonStatus.CLAIM)
                 {
                     ap.status = (int)update.status;
-                    ap.Name = update.Name;
+                    ap.Name = update.NameEN;
                     ap.PersonNo = update.PersonNo;
                 }
             }
@@ -79,7 +79,7 @@ namespace PaperRecognize.Repository
                     ap.status = (int)AuthorPersonStatus.WRONG;
                     Author_Person nap = new Author_Person();
                     nap.AuthorId = ap.AuthorId;
-                    nap.Name = "not found";
+                    nap.Name = "未找到";
                     nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
                 }
 
@@ -92,7 +92,7 @@ namespace PaperRecognize.Repository
                     ap.status = (int)AuthorPersonStatus.WRONG;
                     Author_Person nap = new Author_Person();
                     nap.AuthorId = ap.AuthorId;
-                    nap.Name = "not found";
+                    nap.Name = "未找到";
                     nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
                 }
             }
@@ -135,7 +135,7 @@ namespace PaperRecognize.Repository
                     {
                         Author_Person nap = new Author_Person();
                         nap.AuthorId = ap.AuthorId;
-                        nap.Name = "not found";
+                        nap.Name = "未找到";
                         nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
                     }
                 }
@@ -189,7 +189,7 @@ namespace PaperRecognize.Repository
         private void UpdateName(Author_Person ap, UpdateAuthorPersonDTO update)
         {
             //从数据库取出指定名字的所有人
-            List<Person> persons = context.Person.Where(p => p.NameCN == update.Name).ToList();
+            List<Person> persons = context.Person.Where(p => p.NameCN == update.NameEN).ToList();
             if (null == persons || persons.Count <= 0) return;
 
             //删除同一人的重复信息
