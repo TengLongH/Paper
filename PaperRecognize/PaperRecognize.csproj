@@ -232,6 +232,9 @@
     <Compile Include="AutoMapperConfig\MapperConfig.cs" />
     <Compile Include="Business\Import\ImportPaper.cs" />
     <Compile Include="Business\LookupAuthor.cs" />
+    <Compile Include="Business\LookupPaper\Filter.cs" />
+    <Compile Include="Business\LookupPaper\LevenshteinAnalyser.cs" />
+    <Compile Include="Business\LookupPaper\SearchHelper.cs" />
     <Compile Include="Business\Pretreatment.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />

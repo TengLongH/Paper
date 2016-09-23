@@ -9,18 +9,18 @@ namespace PaperRecognize.DTOs.AndroidDTO
     {
         public AuthorDTO()
         {
-            Authors = new List<PersonVO>();
+            Authors = new List<AuthorPersonVO>();
         }
         public int Id { get; set; }
         public int Ordinal { get; set; }
         public string NameEN { get; set; }
         public string Department { get; set; }
-        public List<PersonVO> Authors { get; set; }
+        public List<AuthorPersonVO> Authors { get; set; }
     }
 
-    public class PersonVO
+    public class AuthorPersonVO
     {
-        public int PersonAuthorId { get; set; }
+        public int AuthorPersonId { get; set; }
         public int Status { get; set; }
         public string PersonNo { get; set; }
         public string NameCN { get; set;}

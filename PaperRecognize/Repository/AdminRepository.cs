@@ -89,13 +89,13 @@ namespace PaperRecognize.Repository
             return authors;
         }
 
-        private List<PersonVO> changeToPersonVO( List<Author_Person> aps )
+        private List<AuthorPersonVO> changeToPersonVO( List<Author_Person> aps )
         {
-            List<PersonVO> pvos = new List<PersonVO>();
+            List<AuthorPersonVO> pvos = new List<AuthorPersonVO>();
             foreach (Author_Person ap in aps)
             {
-                PersonVO vo = new PersonVO();
-                vo.PersonAuthorId = ap.Id;
+                AuthorPersonVO vo = new AuthorPersonVO();
+                vo.AuthorPersonId = ap.Id;
                 vo.Status = (int)ap.status;
                 if (vo.Status != (int)AuthorPersonStatus.NEEDCLAIM)
                 {

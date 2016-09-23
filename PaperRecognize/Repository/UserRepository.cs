@@ -15,10 +15,9 @@ using PaperRecognize.DTOs.AndroidDTO;
 
 
 namespace PaperRecognize.Repository
-{
-    public class UserRepository
+{ 
+    public class UserRepository:RecognizeRepository
     {
-        protected DBModel context = new DBModel();
 
         public UserRepository()
         {
@@ -111,6 +110,7 @@ namespace PaperRecognize.Repository
                 nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
                 context.Author_Person.Add(nap);
             }
+
             context.SaveChanges();
         }
 
@@ -174,7 +174,16 @@ namespace PaperRecognize.Repository
             context.SaveChanges();
         }
 
-
+        private void updatePaperStatus( int paperId )
+        {
+            Paper paper = context.Paper.FirstOrDefault(p => p.Id == paperId);
+            if (null == paper) return;
+            var authors = context.Author.Where(a => a.PaperId == paper.Id).ToList();
+            foreach (var author in authors)
+            {
+                author.Author_Person.Any( );
+            }
+        }
         public string AddUser(AddUserDTO dto)
         {
             if (null == dto) return "request is usless";

@@ -54,12 +54,11 @@ namespace PaperRecognize.Controllers
             return new HttpResponseMessage() { Content = new StringContent("success") };
         }
 
-        [Route("api/admin/cancel/post")]
-        public HttpResponseMessage PostCancelPaper( CancelDTO dto)
+        [Route("api/admin/authorperson")]
+        public HttpResponseMessage PostUpdateAuthorPerson(UpdateAuthorPersonDTO update)
         {
-            repository.CancelAuthorPerson(dto);
-            return new HttpResponseMessage() { Content = new StringContent("success") };
+            repository.UpdateAuthorPerson(update);
+            return new HttpResponseMessage { Content = new StringContent("success") };
         }
-
     }
 }

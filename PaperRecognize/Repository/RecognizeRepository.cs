@@ -14,8 +14,7 @@ namespace PaperRecognize.Repository
 {
     public class RecognizeRepository
     {
-        private int PageSize = 10;
-        private DBModel context = new DBModel();
+        protected DBModel context = new DBModel();
         public IEnumerable<GetAuthorPersonDTO> UpdateAuthorPerson(UpdateAuthorPersonDTO update)
         {
             if (null == update) return null;
@@ -54,28 +53,138 @@ namespace PaperRecognize.Repository
         }
         private void UpdateStatus(Author_Person ap, UpdateAuthorPersonDTO update)
         {
-            if (update.status != AuthorPersonStatus.RIGHT)
-                throw new Exception("Author_Person status value is illegal");
-           
-            //将所有人的状态设置为错误
-            int i = 0;
-            ICollection<Author_Person> aps = ap.Author.Author_Person;
-            while (i < aps.Count)
+            bool authorPass = false;
+            AuthorPersonStatus status = (AuthorPersonStatus)ap.status;
+            if (status == AuthorPersonStatus.NEEDCLAIM)
             {
-                aps.ElementAt(i).status = (int)AuthorPersonStatus.WRONG;
-                i++;
+                //认领
+                if (update.status == AuthorPersonStatus.CLAIM)
+                {
+                    ap.status = (int)update.status;
+                    ap.Name = update.Name;
+                    ap.PersonNo = update.PersonNo;
+                }
             }
-            //将他的状态设置为正确
-            ap.status = (int)AuthorPersonStatus.RIGHT;
+            else if (status == AuthorPersonStatus.CONFIRM)
+            {
+                //分配
+                if (update.status == AuthorPersonStatus.RIGHT)
+                {
+                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    authorPass = true;
+                }
+                //否决
+                if (update.status == AuthorPersonStatus.WRONG)
+                {
+                    ap.status = (int)AuthorPersonStatus.WRONG;
+                    Author_Person nap = new Author_Person();
+                    nap.AuthorId = ap.AuthorId;
+                    nap.Name = "not found";
+                    nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                }
+
+            }
+            else if (status == AuthorPersonStatus.RIGHT)
+            {
+                //撤销
+                if (update.status == AuthorPersonStatus.WRONG)
+                {
+                    ap.status = (int)AuthorPersonStatus.WRONG;
+                    Author_Person nap = new Author_Person();
+                    nap.AuthorId = ap.AuthorId;
+                    nap.Name = "not found";
+                    nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                }
+            }
+            else if (status == AuthorPersonStatus.WRONG)
+            {
+                //强制分配
+                if (update.status == AuthorPersonStatus.RIGHT)
+                {
+                    var list = ap.Author.Author_Person;
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        var item = list.ElementAt(i);
+                        if (item.status == (int)AuthorPersonStatus.RIGHT)
+                        {
+                            item.status = (int)AuthorPersonStatus.WRONG;
+                        }
+                        else if (item.status == (int)AuthorPersonStatus.NEEDCLAIM)
+                        {
+                            list.Remove(item);
+                            i--;
+                        }
+                        else if (item.status == (int)AuthorPersonStatus.CLAIM)
+                        {
+                            item.status = (int)AuthorPersonStatus.REJECT;
+                        }
+                    }
+
+                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    authorPass = true;
+                }
+            }
+            else if (status == AuthorPersonStatus.CLAIM)
+            {
+                //否认
+                if (update.status == AuthorPersonStatus.REJECT)
+                {
+                    ap.status = (int)AuthorPersonStatus.REJECT;
+                    var list = ap.Author.Author_Person;
+                    if (list.All(item => { return item.status != (int)AuthorPersonStatus.CLAIM; }))
+                    {
+                        Author_Person nap = new Author_Person();
+                        nap.AuthorId = ap.AuthorId;
+                        nap.Name = "not found";
+                        nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                    }
+                }
+                //认领分配
+                else if (update.status == AuthorPersonStatus.RIGHT)
+                {
+                    var list = ap.Author.Author_Person;
+                    foreach (var item in list)
+                    {
+                        if (item.status == (int)AuthorPersonStatus.CLAIM)
+                        {
+                            item.status = (int)AuthorPersonStatus.REJECT;
+                        }
+                    }
+                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    authorPass = true;
+                }
+            }
+            else if (status == AuthorPersonStatus.REJECT)
+            {
+                //强制认领分配
+                if (update.status == AuthorPersonStatus.RIGHT)
+                {
+                    var list = ap.Author.Author_Person;
+                    foreach (var item in list)
+                    {
+                        if (item.status == (int)AuthorPersonStatus.CLAIM)
+                        {
+                            item.status = (int)AuthorPersonStatus.REJECT;
+                        }
+                    }
+                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    authorPass = true;
+                } 
+            }
+
 
             //如果论文的所有作者都通过验证，将论文的状态修改为通过
-            List<Author> authors = context.Author
-                .Where(a => a.PaperId == ap.Author.PaperId)
-                .ToList();
-            if (authors.All(a=>a.Author_Person.Any( apa=>apa.status==(int)AuthorPersonStatus.RIGHT)))
+            if( authorPass)
             {
-                ap.Author.Paper.status = (int)PaperStatus.DEAL;
-            }   
+                List<Author> authors = context.Author
+               .Where(a => a.PaperId == ap.Author.PaperId)
+               .ToList();
+                if (authors.All(a => a.Author_Person.Any(apa => apa.status == (int)AuthorPersonStatus.RIGHT)))
+                {
+                    ap.Author.Paper.status = (int)PaperStatus.DEAL;
+                }
+            }
+            
         }
         private void UpdateName(Author_Person ap, UpdateAuthorPersonDTO update)
         {
@@ -120,7 +229,7 @@ namespace PaperRecognize.Repository
             foreach (Person p in persons)
             {
                 Author_Person nap = Mapper.Map<Author_Person>(ap);
-                ChangeAuthorPersonValue(nap, p.PersonNo, p.NameCN, AuthorPersonStatus.CONFIRM );
+                ChangeAuthorPersonValue(nap, p.PersonNo, p.NameCN, AuthorPersonStatus.CLAIM );
                 context.Author_Person.Add(nap);
             }
             //将原来的记录从数据库删除
@@ -170,48 +279,7 @@ namespace PaperRecognize.Repository
             String abb = abbreviation.ToString();
             return p.NameENAbbr.StartsWith(abb, StringComparison.OrdinalIgnoreCase);
         }
-        public IEnumerable<GetOnePaperDTO> GetPapers( int page )
-        {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.Append("SELECT * FROM Paper w1,( ");
-            sqlBuilder.Append("SELECT TOP "+ PageSize +" Id FROM ( ");
-            sqlBuilder.Append("SELECT TOP "+ page * PageSize+" Id FROM Paper WHERE status = "+ (int)PaperStatus.ANALISIS +" ORDER BY Id DESC) ");
-            sqlBuilder.Append("w ORDER BY w.Id ASC) ");
-            sqlBuilder.Append("w2 WHERE w1.Id = w2.Id ORDER BY w1.Id DESC ");
-        
-            List<Paper> papers = null;
-            papers = context.Paper.SqlQuery(sqlBuilder.ToString())
-                 .ToList();
-
-            List<GetOnePaperDTO> dtos = new List<GetOnePaperDTO>();
-            foreach (var paper in papers)
-            {
-                dtos.Add( Mapper.Map<GetOnePaperDTO>( paper ) );
-            }
-            return dtos;
-
-        }
-        public GetOnePaperDTO GetOnePaper(int paperId)
-        {
-            Paper paper = context.Paper.FirstOrDefault(p => p.Id == paperId);
-            if (null == paper) return null;
-            GetOnePaperDTO dto = Mapper.Map<GetOnePaperDTO>(paper);
-            dto.Authors.AddRange(GetAuthors(paperId));
-            return dto;
-        }
-        public IEnumerable<GetOneAuthorDTO> GetAuthors(int paperId)
-        {
-            List<GetOneAuthorDTO> authorDTOs = context.Author
-                .Where(a => a.PaperId == paperId)
-                .Select(Mapper.Map<GetOneAuthorDTO>)
-                .ToList();
-            if( null == authorDTOs ) return new List<GetOneAuthorDTO>();
-            foreach (GetOneAuthorDTO dto in authorDTOs)
-            {
-                dto.AuthorPersons.AddRange( GetAuthorPersons(dto.Id));
-            }
-            return authorDTOs;
-        }
+     
         public IEnumerable<GetAuthorPersonDTO> GetAuthorPersons(int AuthorId)
         {
             List<GetAuthorPersonDTO> list = context.Author_Person
