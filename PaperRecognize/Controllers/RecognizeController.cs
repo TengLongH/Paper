@@ -20,16 +20,6 @@ namespace PaperRecognize.Controllers
     {
         private RecognizeRepository repository = new RecognizeRepository();
 
-        [Route("api/recognize/papers/{page}")]
-        public IEnumerable<GetOnePaperDTO> GetPapers(int page)
-        {
-            return repository.GetPapers(page);
-        }
-        [Route("api/recognize/paper/{paperId}")]
-        public GetOnePaperDTO GetOnePaper(int paperId)
-        {
-            return repository.GetOnePaper(paperId);
-        }
 
         public IEnumerable<GetAuthorPersonDTO> Put(UpdateAuthorPersonDTO update)
         {

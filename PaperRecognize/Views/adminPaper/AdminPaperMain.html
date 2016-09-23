@@ -26,10 +26,8 @@
             .controller("ngAdminClaimPaperCtrl",
             function ($http, $scope) {
 
-
-
-
                 $scope.paperDetail = null;
+
 
                 $http.get("http://localhost:61355/api/admin/claim/get")
                     .success(
@@ -54,18 +52,15 @@
                     )
                 }
 
-                $scope.authorRight = function (authorId) {
-                    var url = "http://localhost:61355/api/admin/claim/post";
+                $scope.authorSubmit = function (changeAuthorPerson)  {
+                    var url = "http://localhost:61355/api/admin/authorperson";
                     $http({
                         method: 'POST',
                         url: url,
-                        data: {
-                            "AuthorPersonId": authorId,
-                            "AuthorClaim": "true"
-                        }
+                        data: changeAuthorPerson
                     }).success(
                         function () {
-                            alert("success");
+                            self.location.reload();
                         }
                     ).error(
                         function () {
@@ -74,25 +69,8 @@
                     );
                 };
 
-                $scope.authorWrong = function (authorId) {
-                    var url = "http://localhost:61355/api/admin/claim/post";
-                    $http({
-                        method: 'POST',
-                        url: url,
-                        data: {
-                            "AuthorPersonId": authorId,
-                            "AuthorClaim": "false"
-                        }
-                    }).success(
-                        function () {
-                            alert("success");
-                        }
-                    ).error(
-                        function () {
-                            alert("通信错误！请检查您的网络！");
-                        }
-                    );
-                };
+
+
 
                 $scope.paperClaim = function (apId) {
                     $http({
@@ -114,6 +92,9 @@
                         }
                     );
                 }
+
+
+
 
 
             })
@@ -240,13 +221,6 @@
         <div id="mainView">
             <div ng-view></div>
         </div>
-
-
-
-
-
-
-
 
     </div>
 </body>

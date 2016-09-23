@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <script src="../../Scripts/jquery-3.1.0.js"></script>
     <script src="../../Scripts/bootstrap.js"></script>
+    <script src="../../Scripts/angular.js"></script>
     <link href="../../Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body ng-controller="ngAdminClaimPaperCtrl">
@@ -38,7 +39,7 @@
     <!--Model-->
 
     <div id="paperModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="paperModalLabel">
-        <div class="modal-dialog" style="width:1400px">
+        <div class="modal-dialog" style="width: 90%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -154,26 +155,43 @@
                                 <tbody>
                                     <tr ng-repeat="author in authorDetail.Authors" class="success">
                                         <td>
-                                            <p ng-show="author.Status == 4">Claim</p>
-                                            <p ng-show="author.Status == 0">Confirm</p>
-                                            <p ng-show="author.Status == 1">Right</p>
-                                            <p ng-show="author.Status == 2">Wrong</p>
-                                            <p ng-show="author.Status == 3">NeedClaim</p>
-                                            <p ng-show="author.Status == 5">Reject</p>
-                                        </td>
-                                        <td><input id="inputPersonNo" placeholder="{{author.PersonNo}}" type="text"/></td>
-                                        <td><input id="inputPersonNo" placeholder="{{author.NameCN}}" type="text" /></td>
-                                        <td><input id="inputPersonNo" placeholder="{{author.NameEN}}" type="text" /></td>
-                                        <td><input id="inputPersonNo" placeholder="{{author.Mobile}}" type="text" /></td>
-                                        <td><input id="inputPersonNo" placeholder="{{author.Email}}" type="text" /></td>
-                                        <td class="row" style="text-align:center">
-                                            <div class="col-lg-2"></div>
-                                            <a ng-click="authorRight(author.PersonAuthorId)" class="btn btn-success btn-sm col-lg-4">Right</a>
-                                            <a ng-click="authorWrong(author.PersonAuthorId)" class="btn btn-warning btn-sm col-lg-4">Wrong</a>
-                                            <div class="col-lg-2"></div>
-                                        </td>
+                                            <select ng-model="changeAuthorPerson.Status" ng-init="changeAuthorPerson.Status = author.Status">
 
+                                                <option ng-selected="changeAuthorPerson.Status == 0" value="0">Confirm</option>
+                                                <option ng-selected="changeAuthorPerson.Status == 1" value="1">Right</option>
+                                                <option ng-selected="changeAuthorPerson.Status == 2" value="2">Wrong</option>
+                                                <option ng-selected="changeAuthorPerson.Status == 3" value="3">NeedClaim</option>
+                                                <option ng-selected="changeAuthorPerson.Status == 4" value="4">Claim</option>
+                                                <option ng-selected="changeAuthorPerson.Status == 5" value="5">Reject</option>
 
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <p ng-show="clickedPersonNo == 0" ng-click="clickedPersonNo = 1" ng-init="clickedPersonNo = 0">{{author.PersonNo}}</p>
+                                            <input ng-show="clickedPersonNo == 1" ng-model="changeAuthorPerson.PersonNo" placeholder="{{author.PersonNo}}" type="text" style="width: 70px" />
+                                        </td>
+                                        <td>
+                                            <p ng-click="clickedNameCN = 1" ng-init="clickedNameCN = 0" ng-show="clickedNameCN == 0">{{author.NameCN}}</p>
+                                            <input ng-show="clickedNameCN == 1" ng-model="changeAuthorPerson.NameCN" placeholder="{{author.NameCN}}" type="text" style="width: 45px" />
+                                        </td>
+                                        <td>
+                                            <p ng-click="clickedNameEN = 1" ng-init="clickedNameEN = 0" ng-show="clickedNameEN == 0">{{author.NameEN}}</p>
+                                            <input ng-show="clickedNameEN == 1" ng-model="changeAuthorPerson.NameEN" placeholder="{{author.NameEN}}" type="text" />
+                                        </td>
+                                        <td>
+                                            <p ng-click="clickedMobile = 1" ng-init="clickedMobile = 0" ng-show="clickedMobile == 0">{{author.Mobile}}</p>
+                                            <input ng-show="clickedMobile == 1" ng-model="changeAuthorPerson.Mobile" placeholder="{{author.Mobile}}" type="text" />
+                                        </td>
+                                        <td>
+                                            <p ng-click="clickedEmail = 1" ng-init="clickedEmail = 0" ng-show="clickedEmail == 0">{{author.Email}}</p>
+                                            <input ng-show="clickedEmail == 1" ng-model="changeAuthorPerson.Email" placeholder="{{author.Email}}" type="text" />
+                                        </td>
+                                        <td class="row" style="text-align: center">
+                                            <div class="col-lg-2"></div>
+                                            <a ng-click="authorSubmit(changeAuthorPerson)" class="btn btn-success btn-block col-lg-4">Submit</a>
+                                            <div class="col-lg-2"></div>
+                                        </td>
+                                        <td>{{changeAuthorPerson}}</td>
                                     </tr>
                                 </tbody>
                             </table>
