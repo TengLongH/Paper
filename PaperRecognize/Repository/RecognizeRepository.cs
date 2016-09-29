@@ -29,7 +29,7 @@ namespace PaperRecognize.Repository
                 {
                     UpdatePersonNo( ap, update );
                 }
-                else if ( ap.Name != update.NameEN)
+                else if ( ap.Name != update.NameCN)
                 {
                     UpdateName(ap, update);
                 }
@@ -51,7 +51,7 @@ namespace PaperRecognize.Repository
 
             return GetAuthorPersons((int)update.AuthorId);
         }
-        private void UpdateStatus(Author_Person ap, UpdateAuthorPersonDTO update)
+        public void UpdateStatus(Author_Person ap, UpdateAuthorPersonDTO update)
         {
             bool authorPass = false;
             AuthorPersonStatus status = (AuthorPersonStatus)ap.status;
@@ -81,6 +81,7 @@ namespace PaperRecognize.Repository
                     nap.AuthorId = ap.AuthorId;
                     nap.Name = "未找到";
                     nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                    context.Author_Person.Add(nap);
                 }
 
             }
@@ -94,6 +95,7 @@ namespace PaperRecognize.Repository
                     nap.AuthorId = ap.AuthorId;
                     nap.Name = "未找到";
                     nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                    context.Author_Person.Add(nap);
                 }
             }
             else if (status == AuthorPersonStatus.WRONG)
@@ -137,6 +139,7 @@ namespace PaperRecognize.Repository
                         nap.AuthorId = ap.AuthorId;
                         nap.Name = "未找到";
                         nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                        context.Author_Person.Add(nap);
                     }
                 }
                 //认领分配
@@ -160,19 +163,25 @@ namespace PaperRecognize.Repository
                 if (update.status == AuthorPersonStatus.RIGHT)
                 {
                     var list = ap.Author.Author_Person;
-                    foreach (var item in list)
+                    for ( int i = 0; i < list.Count; i++ )
                     {
-                        if (item.status == (int)AuthorPersonStatus.CLAIM)
+                        if (list.ElementAt(i).status == (int)AuthorPersonStatus.CLAIM)
                         {
-                            item.status = (int)AuthorPersonStatus.REJECT;
+                            list.ElementAt(i).status = (int)AuthorPersonStatus.REJECT;
                         }
+                        else if (list.ElementAt(i).status == (int)AuthorPersonStatus.NEEDCLAIM)
+                        {
+                            list.Remove(list.ElementAt(i));
+                            i--;
+                        }
+                        
                     }
                     ap.status = (int)AuthorPersonStatus.RIGHT;
                     authorPass = true;
                 } 
             }
 
-
+            context.SaveChanges();
             //如果论文的所有作者都通过验证，将论文的状态修改为通过
             if( authorPass)
             {
@@ -189,7 +198,7 @@ namespace PaperRecognize.Repository
         private void UpdateName(Author_Person ap, UpdateAuthorPersonDTO update)
         {
             //从数据库取出指定名字的所有人
-            List<Person> persons = context.Person.Where(p => p.NameCN == update.NameEN).ToList();
+            List<Person> persons = context.Person.Where(p => p.NameCN == update.NameCN).ToList();
             if (null == persons || persons.Count <= 0) return;
 
             //删除同一人的重复信息

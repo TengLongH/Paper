@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using PaperRecognize.Business;
 using PaperRecognize.Models;
 using PaperRecognize.DTOs.AndroidDTO;
 using PaperRecognize.DTOs.PaperDTO;
 using PaperRecognize.DTOs;
 using System.Text;
+using AutoMapper;
 
 namespace PaperRecognize.Repository
 {
@@ -71,6 +73,15 @@ namespace PaperRecognize.Repository
 
             return "success";
         }
+
+        internal IEnumerable<GetOnePaperDTO> SearchPaper(SearchPaperDTO search)
+        {
+
+            var papers = PaperRecognize.Business.LookupPaper
+                .Lookup.LookupPaperByName(search.PaperName);
+            return papers;
+        }
+
         public List<AuthorDTO> GetPaperAuthors(int paperId)
         {
             StringBuilder sql = new StringBuilder();

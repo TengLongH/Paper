@@ -32,41 +32,8 @@
                     });
 
                 $scope.showDetail = function (paperId) {
-                    var paperUrl = "http://localhost:61355/api/user/paper/detail/" + paperId;
-                    $http.get(paperUrl)
-                    .success(
-                        function (response) {
-                            $scope.paperDetail = response;
-                        }
-                    )
-                    var authorUrl = "http://localhost:61355/api/admin/paperauthors/get/" + paperId;
-                    $http.get(authorUrl)
-                    .success(
-                        function (response) {
-                            $scope.authorDetails = response;
-                        }
-                    )
+                    window.location.href = "AdminPaperDetail.html?" + paperId;
                 }
-
-                $scope.authorSubmit = function (changeAuthorPerson)  {
-                    var url = "http://localhost:61355/api/admin/authorperson";
-                    $http({
-                        method: 'POST',
-                        url: url,
-                        data: changeAuthorPerson
-                    }).success(
-                        function () {
-                            self.location.reload();
-                        }
-                    ).error(
-                        function () {
-                            alert("通信错误！请检查您的网络！");
-                        }
-                    );
-                };
-
-
-
 
                 $scope.paperClaim = function (apId) {
                     $http({
@@ -101,6 +68,7 @@
                 $scope.paperDetail = null;
 
                 $scope.searchPaperSubmit = function (searchPaper) {
+                    alert("search");
                     var url = "http://localhost:61355/api/admin/search";
                     $http({
                         method: 'POST',
@@ -120,20 +88,7 @@
 
 
                 $scope.showDetail = function (paperId) {
-                    var paperUrl = "http://localhost:61355/api/user/paper/detail/" + paperId;
-                    $http.get(paperUrl)
-                    .success(
-                        function (response) {
-                            $scope.paperDetail = response;
-                        }
-                    )
-                    var authorUrl = "http://localhost:61355/api/admin/paperauthors/get/" + paperId;
-                    $http.get(authorUrl)
-                    .success(
-                        function (response) {
-                            $scope.authorDetails = response;
-                        }
-                    )
+                    window.location.href = "AdminPaperDetail.html?" + paperId;
                 }
 
                 $scope.authorSubmit = function (changeAuthorPerson) {
@@ -222,13 +177,7 @@
                 }
 
                 $scope.showDetail = function (paperId) {
-                    var url = "http://localhost:61355/api/user/paper/detail/" + paperId;
-                    $http.get(url)
-                    .success(
-                        function (response) {
-                            $scope.paperDetail = response;
-                        }
-                    )
+                    window.location.href = "AdminPaperDetail.html?" + paperId;
                 };
 
             })

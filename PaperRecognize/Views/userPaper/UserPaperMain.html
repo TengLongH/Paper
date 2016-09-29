@@ -62,7 +62,6 @@
                     $http.get(url)
                     .success(
                         function (response) {
-                            alert("response");
                             $scope.paperDetail = response;
                         }
                     )
@@ -80,6 +79,7 @@
                     function (response) {
                         if (response.toString() == "success") {
                             //按钮置灰
+                            self.location.reload();
                         }
                     }
                     ).error(
@@ -129,7 +129,8 @@
                     function (response) {
                         if (response.toString() == "success") {
                             //按钮置灰
-                            alert("success");
+                            //alert("success");
+                            self.location.reload();
                         }
                     }
                     ).error(
@@ -160,7 +161,8 @@
                         }
                     }).success(
                     function () {
-                        alert("success");
+                        self.location.reload();
+                        //alert("success");
                     }
                     );
                 }
@@ -175,7 +177,8 @@
                         }
                     }).success(
                     function () {
-                        alert("success");
+                        self.location.reload();
+                        //alert("success");
                     }
                     );
                 }

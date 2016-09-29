@@ -1,5 +1,5 @@
 ﻿
-namespace StringMatch.Query
+namespace PaperRecognize.Business.LookupPaper
 {
     #region
 

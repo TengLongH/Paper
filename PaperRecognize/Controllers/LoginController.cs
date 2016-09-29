@@ -22,7 +22,19 @@ namespace PaperRecognize.Controllers
             {
                 return new HttpResponseMessage() { Content = new StringContent("wrong") };
             }
-            User user = context.User.FirstOrDefault(u => u.Role == dto.Role && u.Name == dto.Name && u.Password == dto.Password);
+            User user = null;
+            try
+            {
+                user = context.User.FirstOrDefault(
+                    u => u.Role == dto.Role 
+                    && u.Name == dto.Name 
+                    && u.Password == dto.Password);
+            }
+            catch( Exception e )
+            {
+                return new HttpResponseMessage() { Content = new StringContent(e.Message) };
+            }
+            
             if (null == user)
                 return Util.toJson("wrong");
             var session = HttpContext.Current.Session;

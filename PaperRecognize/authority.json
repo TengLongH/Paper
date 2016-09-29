@@ -17,7 +17,8 @@
       "/api/admin/claim/post",
       "/api/admin/confirm/post",
       "/api/admin/confirm/post",
-      "/api/admin/authorperson"
+      "/api/admin/authorperson",
+      "/api/admin/search"
     ]
   }
 }

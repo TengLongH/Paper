@@ -36,9 +36,9 @@ namespace PaperRecognize.Controllers
         [Route("api/user/confirm/get")]
         public HttpResponseMessage GetConfirmPapers()
         {
-           
 
-            return Util.toJson(repository.GetConfirmPapers("2012304"));
+            object username = HttpContext.Current.Session["username"];
+            return Util.toJson(repository.GetConfirmPapers(username.ToString()));
         }
         [Route("api/user/claim/get")]
         public HttpResponseMessage GetClaimPapers()

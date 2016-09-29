@@ -26,6 +26,8 @@
                                 self.location = "adminPaper/AdminPaperMain.html";
                             } else if (response.toString() == "wrong") {
                                 alert("请输入正确的用户名或密码");
+                            } else {
+                                alert( response );
                             }
                         }
                     ).error(

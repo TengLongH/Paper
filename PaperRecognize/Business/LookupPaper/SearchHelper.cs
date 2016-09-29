@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace StringMatch.Query
+namespace PaperRecognize.Business.LookupPaper
 {
     public class SearchHelper
     {

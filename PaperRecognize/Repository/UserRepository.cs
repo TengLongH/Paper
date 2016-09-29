@@ -86,6 +86,7 @@ namespace PaperRecognize.Repository
         {
             PaperDetailDTO paperDetail = context.Paper.Select(Mapper.Map<PaperDetailDTO>)
                 .FirstOrDefault(p => p.Id == paperId);
+         
             return paperDetail;
         }
 
@@ -96,7 +97,7 @@ namespace PaperRecognize.Repository
                 .ToList();
             AuthorPersonStatus statu = dto.Belongs ? AuthorPersonStatus.RIGHT:AuthorPersonStatus.WRONG;
             Author_Person item = context.Author_Person.FirstOrDefault( ap=>ap.Id == dto.AuthorPersonId);
-
+            if (item.status != (int)AuthorPersonStatus.CONFIRM) return;
             if (dto.Belongs)
             {
                 item.status = (int)AuthorPersonStatus.RIGHT;
@@ -118,50 +119,25 @@ namespace PaperRecognize.Repository
         {
             Person person = context.Person.FirstOrDefault(p => p.PersonNo == dto.Username);
             Author_Person item = context.Author_Person.FirstOrDefault( ap=>ap.Id == dto.AuthorPersonId );
-            //如果为true，将论文分配给他
+           
+            //如果为true，从认领平台删除，添加一条认领信息
             if (dto.Claim)
             {
-                if (item.status != (int)AuthorPersonStatus.CLAIM)
-                {
-                    return;
-                }
-                var authorPersons = context.Author_Person
-                    .Where( ap=>ap.AuthorId == item.AuthorId )
-                    .ToList();
-                for( int i = 0; i <authorPersons.Count; i++ )
-                {
-                    var ap = authorPersons[i];
-                    if (ap.status == (int)AuthorPersonStatus.CONFIRM)
-                    {
-                        ap.status = (int)AuthorPersonStatus.WRONG;
-                    }
-                    else if (ap.status == (int)AuthorPersonStatus.RIGHT)
-                    {
-                        ap.status = (int)AuthorPersonStatus.WRONG;
-                    }
-                    else if (ap.status == (int)AuthorPersonStatus.CLAIM)
-                    {
-                        ap.status = (int)AuthorPersonStatus.REJECT;
-                    }
-                    else if (ap.status == (int)AuthorPersonStatus.NEEDCLAIM)
-                    {
-                        authorPersons.Remove(ap);
-                        i--;
-                    }
-                }
+                if (item.status != (int)AuthorPersonStatus.NEEDCLAIM) return;
+                item.status = (int)AuthorPersonStatus.CLAIM;
                 item.Name = person.NameCN;
                 item.PersonNo = person.PersonNo;
-                item.status = (int)AuthorPersonStatus.RIGHT;
             }
             else
             {
+                if (item.status != (int)AuthorPersonStatus.CLAIM) return;
                 item.status = (int)AuthorPersonStatus.REJECT;
+                //保存数据，下一步查询需要
                 context.SaveChanges();
                 int count = context.Author_Person
                         .Where(cap => cap.AuthorId == item.AuthorId && cap.status == (int)AuthorPersonStatus.CLAIM)
                         .ToList()
                         .Count();
-               
                 if (count <= 0)
                 {
                     Author_Person nap = new Author_Person();
@@ -174,72 +150,15 @@ namespace PaperRecognize.Repository
             context.SaveChanges();
         }
 
-        private void updatePaperStatus( int paperId )
+        private void updatePaperStatus(int paperId)
         {
             Paper paper = context.Paper.FirstOrDefault(p => p.Id == paperId);
             if (null == paper) return;
             var authors = context.Author.Where(a => a.PaperId == paper.Id).ToList();
             foreach (var author in authors)
             {
-                author.Author_Person.Any( );
+                author.Author_Person.Any();
             }
         }
-        public string AddUser(AddUserDTO dto)
-        {
-            if (null == dto) return "request is usless";
-            var person = context.Person.FirstOrDefault(p => p.PersonNo == dto.Name);
-            if (null == person)
-                return "this man is not our school teacher";
-            var user = context.User.FirstOrDefault(u => u.Name == dto.Name && u.Role == dto.Role);
-            if (null != user)
-                return "user has exist";
-
-            if (!AcceptPassword(dto.Password))
-                return "password contains digital alphabet and underline the length is 6-20";
-            if (!(dto.Role == (int)UserRole.DEPTADMIN || dto.Role == (int)UserRole.COMMON))
-            {
-                return "the role is error";
-            }
-            var depart = context.Department.FirstOrDefault(d => d.Id == dto.DepartmentId);
-            if (depart == null)
-                return "can't find the department";
-            User newUser = Mapper.Map<User>(dto);
-            context.User.Add(newUser);
-            context.SaveChanges();
-            return "success";
-        }
-
-        public string DeleteUser(GetUserDTO dto)
-        {
-            var user = context.User.First(u => u.Name == dto.Name && u.Role == dto.Role);
-            if (null != user)
-            {
-                context.User.Remove(user);
-                context.SaveChanges();
-                return "success";
-            }
-            return "can't find the user";
-        }
-
-        public string UpdateUser(UpdateUserDTO dto)
-        {
-            var user = context.User.First(u => u.Name == dto.Name && u.Role == dto.Role);
-            if (null == user)
-                return "can't find the user";
-
-            if (!AcceptPassword(dto.Password))
-                return "password contains digital alphabet and underline the length is 6-20";
-
-            user.Password = dto.Password;
-            context.SaveChanges();
-            return "success";
-        }
-        private bool AcceptPassword(string password)
-        {
-            if (null == password) return false;
-            Regex reg = new Regex(@"\b(\w){6,20}\b");
-            return reg.IsMatch(password);
-        }
-
     }
 }

@@ -60,5 +60,11 @@ namespace PaperRecognize.Controllers
             repository.UpdateAuthorPerson(update);
             return new HttpResponseMessage { Content = new StringContent("success") };
         }
+        [Route("api/admin/search")]
+        public IEnumerable<GetOnePaperDTO> PostSearchPaper( SearchPaperDTO search )
+        {
+            IEnumerable<GetOnePaperDTO> list = repository.SearchPaper( search );
+            return list;
+        }
     }
 }

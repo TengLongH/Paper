@@ -234,6 +234,7 @@
     <Compile Include="Business\LookupAuthor.cs" />
     <Compile Include="Business\LookupPaper\Filter.cs" />
     <Compile Include="Business\LookupPaper\LevenshteinAnalyser.cs" />
+    <Compile Include="Business\LookupPaper\Lookup.cs" />
     <Compile Include="Business\LookupPaper\SearchHelper.cs" />
     <Compile Include="Business\Pretreatment.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="DTOs\AndroidDTO\ClaimDTO.cs" />
     <Compile Include="DTOs\AndroidDTO\ConfirmDTO.cs" />
     <Compile Include="DTOs\AndroidDTO\PaperDetailDTO.cs" />
+    <Compile Include="DTOs\AndroidDTO\SearchPaperDTO.cs" />
     <Compile Include="DTOs\Author\GetAuthorDTO.cs" />
     <Compile Include="DTOs\DepartmentDTO\AddDepartAliasDTO.cs" />
     <Compile Include="DTOs\DepartmentDTO\AddDepartmentDTO.cs" />
@@ -280,18 +282,8 @@
     <Compile Include="Log\LogHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Author.cs" />
-    <Compile Include="Models\Author_Person.cs" />
-    <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\DepartmentAlias.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Business\ParseName\ParseName.cs" />
-    <Compile Include="Models\Log.cs" />
-    <Compile Include="Models\DBModel.cs" />
-    <Compile Include="Models\Paper.cs" />
-    <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\Person_Department.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1143,6 +1135,8 @@
     <Content Include="Views\adminPaper\AdminPaperMain.css" />
     <Content Include="Views\adminPaper\AdminPaperMain.html" />
     <Content Include="Views\adminPaper\AdminSearchPaper.html" />
+    <Content Include="Views\flex_example.css" />
+    <Content Include="Views\flex_example.html" />
     <Content Include="Views\Login.css" />
     <Content Include="Views\Login.html" />
     <Content Include="Views\userPaper\UserPaperClaim.html" />
