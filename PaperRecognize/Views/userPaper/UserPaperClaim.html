@@ -31,7 +31,7 @@
             <tr class="info" ng-repeat="paper in papers">
                 <td><a ng-click="showDetail(paper.Id)" data-target="#paperModal" data-toggle="modal">{{paper.PaperName}}</a></td>
                 <td>{{paper.AuthorName}}</td>
-                <td><a ng-click="paperClaim(paper.AuthorPersonId)" class="btn btn-primary btn-sm">Claim</a></td>
+                <td><a ng-click="paperClaim(paper.AuthorId)" class="btn btn-primary btn-sm">Claim</a></td>
             </tr>
         </tbody>
     </table>

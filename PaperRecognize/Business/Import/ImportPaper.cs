@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -143,7 +144,7 @@ namespace PaperRecognize.Import
                 IncludeType = dr[(int)PaperExcel.Citations].ToString().Trim(),
                 ISIDeliveryNo = dr[(int)PaperExcel.ISIDeliveryNo].ToString().Trim(),
                 ISIArticleIdentifier = dr[(int)PaperExcel.ISIArticleIdentifier].ToString().Trim(),
-                status = (int)PaperStatus.ANALISIS,
+                status = (int)PaperStatus.PRETREATMENT,
             };
             //参考文献数
             string rCount = dr[(int)PaperExcel.CitedReferenceCount].ToString().Trim();
@@ -205,6 +206,13 @@ namespace PaperRecognize.Import
 
             return paper;
         }
+        /// <summary>
+        /// 将Excel文件里的论文信息导入到数据库里
+        /// </summary>
+        /// <param name="file">excel文件名</param>
+        /// <param name="sheetName">包含论文信息的表名</param>
+        /// <param name="isFirstRowColumn">第一行是否是DataTable的列名</param>
+        /// <returns>成功导入的论文信息数目</returns>
         public int ExcelToSQLServer(string file, string sheetName, bool isFirstRowColumn)
         {
             ExcelHelper excel = new ExcelHelper();
@@ -233,6 +241,7 @@ namespace PaperRecognize.Import
 
             using (var db = new DBModel())   //创建对象上下文
             {
+             
                 try
                 {
                     db.Paper.AddRange(pList);

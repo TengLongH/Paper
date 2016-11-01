@@ -9,8 +9,16 @@ using System.Net.Http;
 using System.Web.Script.Serialization;
 namespace PaperRecognize.Utils
 {
+    /// <summary>
+    /// 工具类，包含一些静态的工具方法
+    /// </summary>
     public class Util
     {
+        /// <summary>
+        /// 将对象转换为json然后用HttpResponseMessage封装。多在Controller里使用
+        /// </summary>
+        /// <param name="obj">需要封装的对象</param>
+        /// <returns>将输入封装的HttpResponseMessage</returns>
         public static HttpResponseMessage toJson(Object obj)
         {
             String str;
@@ -26,34 +34,6 @@ namespace PaperRecognize.Utils
             HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, System.Text.Encoding.GetEncoding("UTF-8"), "application/json") };
             return result;
         }
-        public static bool isSchoolAdmin(HttpSessionState session)
-        {
-            int role = GetRole(session);
-            return role == (int)UserRole.SCHOOLADMIN;
-        }
-        public static bool isSchoolDepartAdmin(HttpSessionState session)
-        {
-            int role = GetRole(session);
-            return role == (int)UserRole.DEPTADMIN;
-        }
-        public static bool isSchoolExpert(HttpSessionState session)
-        {
-            int role = GetRole(session);
-            return role == (int)UserRole.COMMON;
-        }
-      
-        private static int GetRole(HttpSessionState session)
-        {
-            if (null == session["role"]) throw new Exception("please login");
-            try
-            {
-                int role = int.Parse(session["role"].ToString());
-                return role;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("unknown error");
-            }
-        }
+        
     }
 }

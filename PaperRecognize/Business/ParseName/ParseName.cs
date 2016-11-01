@@ -7,19 +7,51 @@ using System.IO;
 using System.Text.RegularExpressions;
 namespace PaperRecognize.ParseName
 {
+    /// <summary>
+    /// 识别论文作者的命和姓
+    /// </summary>
     public class NameStyle
     {
+        /// <summary>
+        /// 名字是正序的
+        /// </summary>
         public int asc;
+        /// <summary>
+        /// 不是正序的
+        /// </summary>
         public int notAsc;
-
+        /// <summary>
+        /// 名字是反序的
+        /// </summary>
         public int desc;
+        /// <summary>
+        /// 名字不是反序的
+        /// </summary>
         public int notDesc;
 
+        /// <summary>
+        /// 第一部分是缩写
+        /// </summary>
         public int firstAbbr;
+        /// <summary>
+        /// 第一部分不是缩写
+        /// </summary>
         public int notFirstAbbr;
+        /// <summary>
+        /// 第二部分是缩写
+        /// </summary>
         public int notSecondAbbr;
+        /// <summary>
+        /// 第二部分不是缩写
+        /// </summary>
         public int secondAbbr;
+        /// <summary>
+        /// 确定是正序的
+        /// </summary>
         public int sureAsc;
+        /// <summary>
+        /// 确定是反序的
+        /// </summary>
         public int sureDesc;
 
         public void clear()

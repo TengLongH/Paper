@@ -11,6 +11,6 @@ namespace PaperRecognize.DTOs
         public int? AuthorId { get; set; }
         public string PersonNo { get; set; }
         public string Name { get; set; }
-        public AuthorPersonStatus status { get; set; }
+        public CandidateStatus status { get; set; }
     }
 }

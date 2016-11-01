@@ -1,0 +1,1199 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PaperRecognize</name>
+    </assembly>
+    <members>
+        <member name="T:PaperRecognize.App_Start.AuthorityHandler">
+            <summary>
+            过滤器类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.App_Start.AuthorityHandler.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.App_Start.AuthorityHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            拦截请求，做一些处理
+            </summary>
+            <param name="request">拦截的用户请求</param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PaperRecognize.App_Start.AuthorityHandler.Accept(System.String,System.Object)">
+            <summary>
+            检查是否允许用户访问这个URL
+            </summary>
+            <param name="url">资源的url</param>
+            <param name="userInfo">用户的相关信息</param>
+            <returns>如果允许用户访问返回true，否则返回false</returns>
+        </member>
+        <member name="M:PaperRecognize.App_Start.AuthorityHandler.GetCurrentUser(System.Object)">
+            <summary>
+            将在线用户的信息封装成一个LoginDTO对象
+            </summary>
+            <param name="userInfo">包含在线用户信息的对象</param>
+            <returns>将在线用户的信息封装成一个LoginDTO</returns>
+        </member>
+        <member name="M:PaperRecognize.App_Start.AuthorityHandler.Check(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="role"></param>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaperRecognize.FilterConfig">
+            <summary>
+            添加过滤器的类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.FilterConfig.RegisterGlobalFilters(System.Web.Mvc.GlobalFilterCollection)">
+            <summary>
+            添加过滤器的静态方法
+            </summary>
+            <param name="filters">过滤器集合</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.HelpPageConfig">
+            <summary>
+            Use this class to customize the Help Page.
+            For example you can set a custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
+            or you can provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:PaperRecognize.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:PaperRecognize.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,PaperRecognize.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,PaperRecognize.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:PaperRecognize.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},PaperRecognize.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:PaperRecognize.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:PaperRecognize.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.#ctor(PaperRecognize.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:PaperRecognize.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,PaperRecognize.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:PaperRecognize.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:PaperRecognize.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PaperRecognize.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PaperRecognize.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:PaperRecognize.AutoMapperConfig.MapperConfig">
+            <summary>
+            model和DTO的映射类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.AutoMapperConfig.MapperConfig.config">
+            <summary>
+            配置Model和DTO的映射
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Import.ImportPaper.ExcelToSQLServer(System.String,System.String,System.Boolean)">
+            <summary>
+            将Excel文件里的论文信息导入到数据库里
+            </summary>
+            <param name="file">excel文件名</param>
+            <param name="sheetName">包含论文信息的表名</param>
+            <param name="isFirstRowColumn">第一行是否是DataTable的列名</param>
+            <returns>成功导入的论文信息数目</returns>
+        </member>
+        <member name="M:PaperRecognize.Import.ConfigHelper.GetConfiguration``1(System.Func{System.String,``0},System.String)">
+            <summary>
+            返回web.config文件中appSettings配置节的value项 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="parseFunc"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.GetCellValue(NPOI.SS.UserModel.ICell)">
+            <summary>
+            获取cell的数据，并设置为对应的数据类型
+            </summary>
+            <param name="cell">excel单元格</param>
+            <returns>返回相应的数据类型</returns>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.SetCellValue(NPOI.SS.UserModel.ICell,System.Object)">
+            <summary>
+            根据数据类型设置不同类型的cell
+            </summary>
+            <param name="cell">Excel的单元格</param>
+            <param name="obj">不同类型的数据</param>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.ExcelToDataTable(System.String,System.String,System.Boolean)">
+            <summary>
+            将excel中的数据导入到DataTable中
+            </summary>
+            <param name="fileName">excel文件</param>
+            <param name="sheetName">excel工作薄sheet的名称</param>
+            <param name="isFirstRowColumn">第一行是否是DataTable的列名</param>
+            <returns>返回的DataTable</returns>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.DataTableToExcel(System.Data.DataTable,System.String,System.String,System.Boolean)">
+            <summary>
+            将DataTable数据导入到excel中
+            </summary>
+            <param name="data">要导入的数据</param>
+            <param name="fileName">excel文件</param>
+            <param name="isColumnWritten">DataTable的列名是否要导入</param>
+            <param name="sheetName">要导入的excel的sheet的名称</param>
+            <returns>导入数据行数(包含列名那一行)</returns>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.BuildDropData(System.String)">
+            <summary>
+            构建下拉列表使用数据
+            </summary>
+            <param name="names">待处理的姓名字符串</param>
+            <returns>迭代组合完成的姓名列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.SetDropDownList(NPOI.SS.UserModel.ISheet,System.String,System.String,System.String,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            设置excel下拉列表
+            </summary>
+            <param name="sheet">excel工作表</param>
+            <param name="sheetName">下拉列表使用数据的sheet的名字</param>
+            <param name="rangeName">下拉列表使用数据的域</param>
+            <param name="names">待处理的姓名字符串</param>
+            <param name="count">数据表中数据行数，ref引用格式</param>
+            <param name="Row">所要设置的下拉列表所在行</param>
+            <param name="Col">所要设置的下拉列表所在列</param>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.ColumnToIndex(System.String)">
+            <summary>
+            用于excel表格中列号字母转成列索引，从1对应A开始
+            </summary>
+            <param name="column">列号</param>
+            <returns>列索引</returns>
+        </member>
+        <member name="M:PaperRecognize.Import.ExcelHelper.IndexToColumn(System.Int32)">
+            <summary>
+            用于将excel表格中列索引转成列号字母，从A对应1开始
+            </summary>
+            <param name="index">列索引</param>
+            <returns>列号</returns>
+        </member>
+        <member name="F:PaperRecognize.Business.LookupAuthor.Log">
+            <summary>
+            获取日志对象的实例
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.Business.LookupAuthor.context">
+            <summary>
+            数据库对象
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.LookupPapers">
+            <summary>
+            查找所有论文的作者对应的人员
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.LookupPaperAuthors(System.Int32)">
+            <summary>
+            查找一篇论文的作者对应的人员
+            </summary>
+            <param name="paperId">查找的论文ID</param>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.LookupCandidate(PaperRecognize.Models.Author)">
+            <summary>
+            查找一个作者的候选人
+            </summary>
+            <param name="author">需要查找候选人的作者对象</param>
+            <returns>是否找到了候选人，找到为true，没找到为false</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.GetPersonFromShool(PaperRecognize.Models.Author)">
+            <summary>
+            从学校范围内查找作者候选人
+            </summary>
+            <param name="author">需要查找候选人的作者对象</param>
+            <returns>找到的候选人的学号集合</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.GetPersonFromDepart(PaperRecognize.Models.Author,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            在院系范围内查找作者候选人
+            </summary>
+            <param name="author">需要查找候选人的作者对象</param>
+            <param name="departIds">院系的ID列表</param>
+            <returns>找到的候选人学号列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.GetChildDepartIds(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            获取下一级部门的ID
+            </summary>
+            <param name="departIds">父级部门的ID列表</param>
+            <returns>子级部门的ID列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.TransList(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            将int型数组转换成字符串
+            </summary>
+            <param name="list">需要转换的into数组</param>
+            <returns>生成的字符串</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupAuthor.TransList(System.String)">
+            <summary>
+            将 departmentName1;departmentName2;...departmentName3这种格式的字符串转化成
+            ‘departmentName1’，‘departmentName2’，...‘departmentName3’这种格式
+            </summary>
+            <param name="strDeparts">输入的字符串</param>
+            <returns>转化的结果</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupPaper.Filter.filter_str(System.String,System.String,System.Int32,System.String[],System.String[])">
+            <summary>
+            利用过滤规则，过滤掉不可能成功匹配的字符串
+            </summary>
+            <param name="s">源字符串</param>
+            <param name="t">目标字符串</param>
+            <param name="k">距离阈值</param>
+            <returns></returns>
+        </member>
+        <member name="T:PaperRecognize.Business.LookupPaper.Lookup">
+            <summary>
+            使用一些关键字如论文名，作者名，院系等搜索论文的类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupPaper.Lookup.#cctor">
+            <summary>
+            静态构造函数，初始化各个参数
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Business.LookupPaper.Lookup.LookupPaperByName(System.String)">
+            <summary>
+            用论文名搜索论文
+            </summary>
+            <param name="name">论文名</param>
+            <returns>搜索到的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.pretreatPaper">
+            <summary>
+            对论文作者等信息进行预处理
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.getAuthors(PaperRecognize.Models.Paper)">
+            <summary>
+            获得每篇论文的作者相关信息，包括英文名字、院系、是否通信作者等信息
+            </summary>
+            <param name="paper">一篇论文</param>
+            <returns>作者列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.extractAuthorName(System.String,System.String)">
+            <summary>
+            从【作者地址】中提取作者
+            </summary>
+            <param name="address">一条作者地址</param>
+            <returns>提取出的作者list</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.isOurSchool(System.String)">
+            <summary>
+            判断给出的单位地址是否是本单位
+            </summary>
+            <param name="addrLine">一条地址</param>
+            <returns>true or false</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.getContainsAlias(System.String)">
+            <summary>
+            获取该条地址包含的院系、实验室的别名
+            </summary>
+            <param name="addrLine">一条地址</param>
+            <returns>院系别名的列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.getSchoolOrdinal(System.String,System.String[],System.String[])">
+            <summary>
+            获取某位作者在作者地址列表中所署名的本校位次
+            </summary>
+            <param name="name">一个作者英文名字</param>
+            <param name="authors">从作者地址中提取出的作者list</param>
+            <param name="address">地址list</param>
+            <returns>0：外单位 >0：本校署名位次</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.getDepartment(System.String,System.String[],System.String[])">
+            <summary>
+            获取某个作者在地址列表中署名的院系、实验室的英文名字
+            </summary>
+            <param name="name">作者英文名字</param>
+            <param name="authors">从作者地址中提取出的作者list</param>
+            <param name="address">地址list</param>
+            <returns>院系list</returns>
+        </member>
+        <member name="M:PaperRecognize.Business.Pretreatment.getPaperDepartmentId(System.Collections.Generic.List{System.String})">
+            <summary>
+            获得论文所属学院
+            </summary>
+            <param name="depts">院系英文名字list</param>
+            <returns>学院ID</returns>
+        </member>
+        <member name="T:PaperRecognize.Controllers.AdminController">
+            <summary>
+            管理员操作类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Controllers.AdminController.GetPapers(System.Int32)">
+            <summary>
+            获取需要管理员处理的论文
+            </summary>
+            <param name="page">显示哪一页的条目</param>
+            <returns>需要处理的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.AdminController.GetCandidate(System.Int32)">
+            <summary>
+            获取论文所有作者的候选人
+            </summary>
+            <param name="paperId">论文ID</param>
+            <returns>返回一个作者列表，每一个作者对象里都有一个候选人列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.AdminController.PostSearchPaper(PaperRecognize.DTOs.AndroidDTO.SearchPaperDTO)">
+            <summary>
+            用论文名，作者名，论文所属院系等搜索论文
+            </summary>
+            <param name="search">对象里有搜索论文的关键字</param>
+            <returns>搜索到的所有论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.AdminController.GetImportPapers">
+            <summary>
+            将上传的论文信息导入到数据库
+            </summary>
+            <returns>导入成功返回success,否则返回一条错误信息</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.AdminController.GetLookupAuhor">
+            <summary>
+            搜索作者的候选人
+            </summary>
+            <returns>成功执行返回success，否则返回一条错误信息</returns>
+        </member>
+        <member name="T:PaperRecognize.Controllers.LoginController">
+            <summary>
+            用户登录的Controller
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Controllers.LoginController.PostLogin(PaperRecognize.DTOs.Login.LoginDTO)">
+            <summary>
+            用户登录方法
+            </summary>
+            <param name="dto">它有三个属性：用户名，密码和角色</param>
+            <returns>如果登录成功返回用户的角色如 common普通用户，admin管理员。如果登录失败返回wrong</returns>
+        </member>
+        <member name="T:PaperRecognize.Controllers.UserController">
+            <summary>
+            用户操作类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.GetMyPaper">
+            <summary>
+            获取分配给自己的论文
+            </summary>
+            <returns>分配给该用户的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.GetSystemPushAuthors">
+            <summary>
+            获取系统推荐的论文信息
+            </summary>
+            <returns>接收到的论文推荐信息列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.GetClaimAuthors(System.Int32)">
+            <summary>
+            获取认领平台的论文列表
+            </summary>
+            <returns>所有放在认领平台的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.GetPaperDetail(System.Int32)">
+            <summary>
+            获取一篇论文的详细内容
+            </summary>
+            <param name="paperId">论文的ID</param>
+            <returns>论文的详细信息</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.GetMyClaimAuthor">
+            <summary>
+            获取自己从认领平台认领下的论文
+            </summary>
+            <returns>该用户认领的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.PostConfirmPaper(PaperRecognize.DTOs.AndroidDTO.ConfirmDTO)">
+            <summary>
+            处理系统推荐的论文
+            </summary>
+            <param name="dto">它有3个属性：username用户名，CandidateId系统推荐信息的ID，Belong用户接受为true否则为false</param>
+            <returns>处理成功返回success</returns>
+        </member>
+        <member name="M:PaperRecognize.Controllers.UserController.PostClaimAuthor(PaperRecognize.DTOs.AndroidDTO.ClaimDTO)">
+            <summary>
+            从认领平台认领论文
+            </summary>
+            <param name="dto">它有两个属性：username用户名，AuthorId用户要认领下的作者ID</param>
+            <returns>认领成功返回success</returns>
+        </member>
+        <member name="T:PaperRecognize.DTOs.PaperStatus">
+            <summary>
+            论文状态枚举类
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.PaperStatus.PRETREATMENT">
+            <summary>
+            论文导入，需要预处理
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.PaperStatus.LOOKUP">
+            <summary>
+            经过预处理，系统还没有搜索作者对应的人
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.PaperStatus.CONFIRM">
+            <summary>
+            系统已经搜索过作者对应的人，系统的推荐信息还没有经过用户和管理员确认
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.PaperStatus.DEAL">
+            <summary>
+            所有作者都找到了对应人
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.DTOs.CandidateStatus">
+            <summary>
+            候选人状态枚举类
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.CandidateStatus.RIGHT">
+            <summary>
+            候选人是作者
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.CandidateStatus.WRONG">
+            <summary>
+            候选人不是作者
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.CandidateStatus.CHECK">
+            <summary>
+            等待用户或者管理员确认
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.DTOs.UserRole">
+            <summary>
+            用户角色枚举类
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.UserRole.COMMON">
+            <summary>
+            普通用户
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.UserRole.ADMIN">
+            <summary>
+            管理员
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.DTOs.DepartmentType">
+            <summary>
+            部门类型枚举类
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.DepartmentType.SCHOOL">
+            <summary>
+            学校
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.DepartmentType.COLLEGE">
+            <summary>
+            学院
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.DepartmentType.DEPARTMENT">
+            <summary>
+            学院下属的系
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.DepartmentType.LAB">
+            <summary>
+            实验室
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.DTOs.DepartmentType.INSTITUTE">
+            <summary>
+            研究所
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Log.LogHelper">
+            <summary>
+            获取日志的工具类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Log.LogHelper.GetLogger(System.String)">
+            <summary>
+            获取日志访问句柄
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PaperRecognize.ParseName.NameStyle">
+            <summary>
+            识别论文作者的命和姓
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.asc">
+            <summary>
+            名字是正序的
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.notAsc">
+            <summary>
+            不是正序的
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.desc">
+            <summary>
+            名字是反序的
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.notDesc">
+            <summary>
+            名字不是反序的
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.firstAbbr">
+            <summary>
+            第一部分是缩写
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.notFirstAbbr">
+            <summary>
+            第一部分不是缩写
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.notSecondAbbr">
+            <summary>
+            第二部分是缩写
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.secondAbbr">
+            <summary>
+            第二部分不是缩写
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.sureAsc">
+            <summary>
+            确定是正序的
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.ParseName.NameStyle.sureDesc">
+            <summary>
+            确定是反序的
+            </summary>
+        </member>
+        <member name="T:PaperRecognize.Repository.AdminRepository">
+            <summary>
+            管理员操作的具体实现类
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Repository.AdminRepository.Accept(System.Int32)">
+            <summary>
+            将一篇论文分配给一个候选人
+            </summary>
+            <param name="candidateId">候选人的ID</param>
+        </member>
+        <member name="M:PaperRecognize.Repository.AdminRepository.RejectAll(System.Int32)">
+            <summary>
+            否决该作者的所有候选人
+            </summary>
+            <param name="authorId">作者的ID</param>
+        </member>
+        <member name="M:PaperRecognize.Repository.AdminRepository.SearchPaper(PaperRecognize.DTOs.AndroidDTO.SearchPaperDTO)">
+            <summary>
+            使用论文名或者作者名所属学院等搜索论文
+            </summary>
+            <param name="search">用来搜索的关键字：
+                PaperName，论文名，可以只有一部分；
+                AuthorName，作者名；
+                Depart，论文所属学院。
+            </param>
+            <returns>搜索到的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.AdminRepository.GetPapers(System.Int32)">
+            <summary>
+            获取需要管理员处理的论文，作者候选人里有状态为check的论文
+            </summary>
+            <param name="page">分页显示，输入需要显示第几页的数据</param>
+            <returns>需要处理的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.AdminRepository.GetCandidate(System.Int32)">
+            <summary>
+            获取一篇论文的所有作者及其候选人
+            </summary>
+            <param name="paperId">论文ID</param>
+            <returns>论文作者列表，作者对象里有它的候选人列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.AdminRepository.ImportPapers">
+            <summary>
+            将论文数据从Excel导入到数据库
+            </summary>
+            <returns>导入成功返回success，否则返回一条错误信息</returns>
+        </member>
+        <member name="T:PaperRecognize.Repository.UserRepository">
+            <summary>
+            用户操作的具体实现类
+            </summary>
+        </member>
+        <member name="F:PaperRecognize.Repository.UserRepository.pageSize">
+            <summary>
+            分页，每页显示的条目数
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.GetSystemPushAuthor(System.String)">
+            <summary>
+            获取系统推荐给该用户的论文信息
+            </summary>
+            <param name="username">用户名</param>
+            <returns>系统推荐的论文信息列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.GetMyClaimAuthor(System.String)">
+            <summary>
+            获取用户从认领平台认领的论文
+            </summary>
+            <param name="username">用户名</param>
+            <returns>用户认领的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.GetMyPaper(System.String)">
+            <summary>
+            获取分配给该用户的论文
+            </summary>
+            <param name="username">用户名</param>
+            <returns>分配给该用户的论文列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.GetPaperDetail(System.Int32)">
+            <summary>
+            获取一篇论文的详细信息，如论文的作者列表，所属实验室，关键字，摘要等等
+            </summary>
+            <param name="paperId">论文的ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.ConfirmSystemPushAuthor(PaperRecognize.DTOs.AndroidDTO.ConfirmDTO)">
+            <summary>
+            用户确认系统推荐的论文信息。如果系统只找到一个候选人，用户可以接受或者拒绝
+            如果系统找到多个候选人，用户只能拒绝
+            </summary>
+            <param name="dto">有三个属性：
+            1.Username，用户名。
+            2.CandidateId,候选人信息的ID。
+            3.Belong, 用户接受为true，用户拒绝为false
+            </param>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.UpdatePaperStatus(PaperRecognize.Models.Paper)">
+            <summary>
+            如果将某一个候选人的状态设置为right，就需要查看一下论文的状态是否需要更改
+            </summary>
+            <param name="paper">论文对象，看该论文对象的状态是否需要更改</param>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.ClaimAuthor(PaperRecognize.DTOs.AndroidDTO.ClaimDTO)">
+            <summary>
+            从认领平台认领作者
+            </summary>
+            <param name="claim">它有两个属性：
+                1.Username，认领的用户名
+                2.AuthorId,被认领的论文作者的ID
+            </param>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.CreateNewCandidate(PaperRecognize.Models.Author,PaperRecognize.Models.Person)">
+            <summary>
+            Person是Author的候选人，使用Person和Author对象生成一个新的候选人对象
+            </summary>
+            <param name="author">作者对象</param>
+            <param name="person">人员对象</param>
+            <returns>生成的候选人对象</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.isNoneCandidatesAuthor(System.Int32)">
+            <summary>
+            判断一个作者有没有候选人
+            </summary>
+            <param name="authorId">作者的ID</param>
+            <returns>如果作者没有候选人返回true，反之为false</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.GetNoneCandidateAuthor(System.Int32)">
+            <summary>
+            获取没有候选人的作者
+            </summary>
+            <param name="page">数据分页显示，输入的页码</param>
+            <returns>没有候选人的作者列表</returns>
+        </member>
+        <member name="M:PaperRecognize.Repository.UserRepository.NoneCandidatesAuthors">
+            <summary>
+            获取所有没有候选人作者的ID列表
+            </summary>
+            <returns>无候选人的作者ID列表</returns>
+        </member>
+        <member name="T:PaperRecognize.Utils.Util">
+            <summary>
+            工具类，包含一些静态的工具方法
+            </summary>
+        </member>
+        <member name="M:PaperRecognize.Utils.Util.toJson(System.Object)">
+            <summary>
+            将对象转换为json然后用HttpResponseMessage封装。多在Controller里使用
+            </summary>
+            <param name="obj">需要封装的对象</param>
+            <returns>将输入封装的HttpResponseMessage</returns>
+        </member>
+    </members>
+</doc>

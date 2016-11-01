@@ -14,16 +14,22 @@ using PaperRecognize.DTOs.PaperDTO;
 using PaperRecognize.DTOs.AndroidDTO;
 namespace PaperRecognize.AutoMapperConfig
 {
+    /// <summary>
+    /// model和DTO的映射类
+    /// </summary>
     public class MapperConfig
     {
+        /// <summary>
+        /// 配置Model和DTO的映射
+        /// </summary>
         public void config()
         {
             Mapper.Initialize( mapper => {
                 mapper.CreateMap<Paper, GetOnePaperDTO>();
 
-                mapper.CreateMap<Author, GetOneAuthorDTO>();
-                mapper.CreateMap<Author_Person, GetAuthorPersonDTO>();
-                mapper.CreateMap<Author_Person, Author_Person>();
+                //mapper.CreateMap<Author, GetOneAuthorDTO>();
+                mapper.CreateMap<Candidate, GetAuthorPersonDTO>();
+                mapper.CreateMap<Candidate, Candidate>();
 
                 mapper.CreateMap<Person, GetPersonDTO>()
                     .ForMember(entity => entity.DepartmentId, opt=>opt.Ignore());

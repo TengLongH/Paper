@@ -11,10 +11,18 @@ using PaperRecognize.Utils;
 
 namespace PaperRecognize.Controllers
 {
+    /// <summary>
+    /// 用户登录的Controller
+    /// </summary>
     public class LoginController : ApiController
     {
         private DBModel context = new DBModel();
 
+        /// <summary>
+        /// 用户登录方法
+        /// </summary>
+        /// <param name="dto">它有三个属性：用户名，密码和角色</param>
+        /// <returns>如果登录成功返回用户的角色如 common普通用户，admin管理员。如果登录失败返回wrong</returns>
         [Route("api/login")]
         public HttpResponseMessage PostLogin(LoginDTO dto)
         {
@@ -44,7 +52,7 @@ namespace PaperRecognize.Controllers
             if (user.Role == 0)
                 return new HttpResponseMessage() { Content = new StringContent("common") };
             if (user.Role == 1)
-                return new HttpResponseMessage() { Content = new StringContent("depart") };
+                return new HttpResponseMessage() { Content = new StringContent("admin") };
             return new HttpResponseMessage() { Content=new StringContent("wrong")};
         }
     }

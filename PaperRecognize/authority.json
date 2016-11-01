@@ -2,7 +2,7 @@
   "role": {
     "common": [
       "/api/user/mypaper/get",
-      "/api/user/confirm/get",
+      "/api/user/system/get",
       "/api/user/claim/get",
       "/api/user/paper/detail",
       "/api/user/myclaim/get",

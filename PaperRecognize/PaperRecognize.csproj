@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\PaperRecognize.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,10 @@
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -161,9 +166,6 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin.Host.SystemWeb">
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
@@ -228,7 +230,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Authority\Authority.cs" />
     <Compile Include="AutoMapperConfig\MapperConfig.cs" />
     <Compile Include="Business\Import\ImportPaper.cs" />
     <Compile Include="Business\LookupAuthor.cs" />
@@ -239,13 +240,9 @@
     <Compile Include="Business\Pretreatment.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\DepartmentController.cs" />
-    <Compile Include="Controllers\PersonController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\RecognizeController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DTOs\AndroidDTO\AuthorsDTO.cs" />
     <Compile Include="DTOs\AndroidDTO\CancelDTO.cs" />
@@ -260,7 +257,6 @@
     <Compile Include="DTOs\DepartmentDTO\UpdateDeparAliasDTO.cs" />
     <Compile Include="DTOs\DepartmentDTO\UpdateDepartmentDTO.cs" />
     <Compile Include="DTOs\AuthorPersonDTO\GetAuthorPersonDTO.cs" />
-    <Compile Include="DTOs\Author\GetOneAuthorDTO.cs" />
     <Compile Include="DTOs\PaperDTO\GetOnePaperDTO.cs" />
     <Compile Include="DTOs\PersonDTO\AddPersnDTO.cs" />
     <Compile Include="DTOs\PersonDTO\GetPersonDTO.cs" />
@@ -269,7 +265,6 @@
     <Compile Include="DTOs\AndroidDTO\GetConfirmDTO.cs" />
     <Compile Include="DTOs\AndroidDTO\GetClaimDTO.cs" />
     <Compile Include="DTOs\Status.cs" />
-    <Compile Include="DTOs\Author\UpdateAuthorDTO.cs" />
     <Compile Include="DTOs\Upload\UploadDTO.cs" />
     <Compile Include="DTOs\UserDTO\AddUserDTO.cs" />
     <Compile Include="DTOs\UserDTO\GetUserDTO.cs" />
@@ -282,8 +277,18 @@
     <Compile Include="Log\LogHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\Candidate.cs" />
+    <Compile Include="Models\DBModel.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DepartmentAlias.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Business\ParseName\ParseName.cs" />
+    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Paper.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Person_Department.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -292,18 +297,14 @@
     </Compile>
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
-    <Compile Include="Repository\DepartmentRepository.cs" />
-    <Compile Include="Repository\PersonRepository.cs" />
     <Compile Include="Repository\RecognizeRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Utils\Authority.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Authority\Authority.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -333,8 +334,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="image\32-130Q4163544.jpg" />
-    <Content Include="image\未标题-1.jpg" />
     <Content Include="log4net.config" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -345,6 +344,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="App_Data\Paper\paper.xlsx" />
     <None Include="Properties\PublishProfiles\Paper.pubxml" />
     <None Include="Properties\PublishProfiles\PaperRecognize.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -1174,8 +1174,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Department\" />
-    <Folder Include="App_Data\Paper\" />
     <Folder Include="App_Data\Person\" />
+    <Folder Include="DTOs\Web\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

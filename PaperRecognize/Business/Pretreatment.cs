@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
 using PaperRecognize.Models;
 using PaperRecognize.ParseName;
 using PaperRecognize.DTOs;
@@ -27,7 +26,7 @@ namespace PaperRecognize.Business
             {
                 depList = db.Department.ToList();
                 aliasList = db.DepartmentAlias.ToList();
-                pList = db.Paper.Where(p => p.status == (int)PaperStatus.ANALISIS).ToList();
+                pList = db.Paper.Where(p => p.status == (int)PaperStatus.PRETREATMENT).ToList();
             }
 
             int OUCId = depList.Where(e => e.Name == OUC).First().Id;
@@ -51,7 +50,11 @@ namespace PaperRecognize.Business
             using (var db = new DBModel())
             {
                 db.Author.AddRange(aList);
-
+                db.SaveChanges();
+                foreach (var p in pList)
+                {
+                    p.status = (int)PaperStatus.LOOKUP;
+                }
                 db.SaveChanges();
             }
         }

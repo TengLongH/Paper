@@ -15,6 +15,7 @@ namespace PaperRecognize.Repository
     public class RecognizeRepository
     {
         protected DBModel context = new DBModel();
+        /*
         public IEnumerable<GetAuthorPersonDTO> UpdateAuthorPerson(UpdateAuthorPersonDTO update)
         {
             if (null == update) return null;
@@ -54,129 +55,129 @@ namespace PaperRecognize.Repository
         public void UpdateStatus(Author_Person ap, UpdateAuthorPersonDTO update)
         {
             bool authorPass = false;
-            AuthorPersonStatus status = (AuthorPersonStatus)ap.status;
-            if (status == AuthorPersonStatus.NEEDCLAIM)
+            CandidateStatus status = (CandidateStatus)ap.status;
+            if (status == CandidateStatus.NEEDCLAIM)
             {
                 //认领
-                if (update.status == AuthorPersonStatus.CLAIM)
+                if (update.status == CandidateStatus.CLAIM)
                 {
                     ap.status = (int)update.status;
                     ap.Name = update.NameEN;
                     ap.PersonNo = update.PersonNo;
                 }
             }
-            else if (status == AuthorPersonStatus.CONFIRM)
+            else if (status == CandidateStatus.CONFIRM)
             {
                 //分配
-                if (update.status == AuthorPersonStatus.RIGHT)
+                if (update.status == CandidateStatus.RIGHT)
                 {
-                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    ap.status = (int)CandidateStatus.RIGHT;
                     authorPass = true;
                 }
                 //否决
-                if (update.status == AuthorPersonStatus.WRONG)
+                if (update.status == CandidateStatus.WRONG)
                 {
-                    ap.status = (int)AuthorPersonStatus.WRONG;
+                    ap.status = (int)CandidateStatus.WRONG;
                     Author_Person nap = new Author_Person();
                     nap.AuthorId = ap.AuthorId;
                     nap.Name = "未找到";
-                    nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                    nap.status = (int)CandidateStatus.NEEDCLAIM;
                     context.Author_Person.Add(nap);
                 }
 
             }
-            else if (status == AuthorPersonStatus.RIGHT)
+            else if (status == CandidateStatus.RIGHT)
             {
                 //撤销
-                if (update.status == AuthorPersonStatus.WRONG)
+                if (update.status == CandidateStatus.WRONG)
                 {
-                    ap.status = (int)AuthorPersonStatus.WRONG;
+                    ap.status = (int)CandidateStatus.WRONG;
                     Author_Person nap = new Author_Person();
                     nap.AuthorId = ap.AuthorId;
                     nap.Name = "未找到";
-                    nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                    nap.status = (int)CandidateStatus.NEEDCLAIM;
                     context.Author_Person.Add(nap);
                 }
             }
-            else if (status == AuthorPersonStatus.WRONG)
+            else if (status == CandidateStatus.WRONG)
             {
                 //强制分配
-                if (update.status == AuthorPersonStatus.RIGHT)
+                if (update.status == CandidateStatus.RIGHT)
                 {
                     var list = ap.Author.Author_Person;
                     for (int i = 0; i < list.Count; i++)
                     {
                         var item = list.ElementAt(i);
-                        if (item.status == (int)AuthorPersonStatus.RIGHT)
+                        if (item.status == (int)CandidateStatus.RIGHT)
                         {
-                            item.status = (int)AuthorPersonStatus.WRONG;
+                            item.status = (int)CandidateStatus.WRONG;
                         }
-                        else if (item.status == (int)AuthorPersonStatus.NEEDCLAIM)
+                        else if (item.status == (int)CandidateStatus.NEEDCLAIM)
                         {
                             list.Remove(item);
                             i--;
                         }
-                        else if (item.status == (int)AuthorPersonStatus.CLAIM)
+                        else if (item.status == (int)CandidateStatus.CLAIM)
                         {
-                            item.status = (int)AuthorPersonStatus.REJECT;
+                            item.status = (int)CandidateStatus.REJECT;
                         }
                     }
 
-                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    ap.status = (int)CandidateStatus.RIGHT;
                     authorPass = true;
                 }
             }
-            else if (status == AuthorPersonStatus.CLAIM)
+            else if (status == CandidateStatus.CLAIM)
             {
                 //否认
-                if (update.status == AuthorPersonStatus.REJECT)
+                if (update.status == CandidateStatus.REJECT)
                 {
-                    ap.status = (int)AuthorPersonStatus.REJECT;
+                    ap.status = (int)CandidateStatus.REJECT;
                     var list = ap.Author.Author_Person;
-                    if (list.All(item => { return item.status != (int)AuthorPersonStatus.CLAIM; }))
+                    if (list.All(item => { return item.status != (int)CandidateStatus.CLAIM; }))
                     {
                         Author_Person nap = new Author_Person();
                         nap.AuthorId = ap.AuthorId;
                         nap.Name = "未找到";
-                        nap.status = (int)AuthorPersonStatus.NEEDCLAIM;
+                        nap.status = (int)CandidateStatus.NEEDCLAIM;
                         context.Author_Person.Add(nap);
                     }
                 }
                 //认领分配
-                else if (update.status == AuthorPersonStatus.RIGHT)
+                else if (update.status == CandidateStatus.RIGHT)
                 {
                     var list = ap.Author.Author_Person;
                     foreach (var item in list)
                     {
-                        if (item.status == (int)AuthorPersonStatus.CLAIM)
+                        if (item.status == (int)CandidateStatus.CLAIM)
                         {
-                            item.status = (int)AuthorPersonStatus.REJECT;
+                            item.status = (int)CandidateStatus.REJECT;
                         }
                     }
-                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    ap.status = (int)CandidateStatus.RIGHT;
                     authorPass = true;
                 }
             }
-            else if (status == AuthorPersonStatus.REJECT)
+            else if (status == CandidateStatus.REJECT)
             {
                 //强制认领分配
-                if (update.status == AuthorPersonStatus.RIGHT)
+                if (update.status == CandidateStatus.RIGHT)
                 {
                     var list = ap.Author.Author_Person;
                     for ( int i = 0; i < list.Count; i++ )
                     {
-                        if (list.ElementAt(i).status == (int)AuthorPersonStatus.CLAIM)
+                        if (list.ElementAt(i).status == (int)CandidateStatus.CLAIM)
                         {
-                            list.ElementAt(i).status = (int)AuthorPersonStatus.REJECT;
+                            list.ElementAt(i).status = (int)CandidateStatus.REJECT;
                         }
-                        else if (list.ElementAt(i).status == (int)AuthorPersonStatus.NEEDCLAIM)
+                        else if (list.ElementAt(i).status == (int)CandidateStatus.NEEDCLAIM)
                         {
                             list.Remove(list.ElementAt(i));
                             i--;
                         }
                         
                     }
-                    ap.status = (int)AuthorPersonStatus.RIGHT;
+                    ap.status = (int)CandidateStatus.RIGHT;
                     authorPass = true;
                 } 
             }
@@ -188,7 +189,7 @@ namespace PaperRecognize.Repository
                 List<Author> authors = context.Author
                .Where(a => a.PaperId == ap.Author.PaperId)
                .ToList();
-                if (authors.All(a => a.Author_Person.Any(apa => apa.status == (int)AuthorPersonStatus.RIGHT)))
+                if (authors.All(a => a.Author_Person.Any(apa => apa.status == (int)CandidateStatus.RIGHT)))
                 {
                     ap.Author.Paper.status = (int)PaperStatus.DEAL;
                 }
@@ -238,7 +239,7 @@ namespace PaperRecognize.Repository
             foreach (Person p in persons)
             {
                 Author_Person nap = Mapper.Map<Author_Person>(ap);
-                ChangeAuthorPersonValue(nap, p.PersonNo, p.NameCN, AuthorPersonStatus.CLAIM );
+                ChangeAuthorPersonValue(nap, p.PersonNo, p.NameCN, CandidateStatus.CLAIM );
                 context.Author_Person.Add(nap);
             }
             //将原来的记录从数据库删除
@@ -261,9 +262,9 @@ namespace PaperRecognize.Repository
             {
                 throw new Exception("expert English name is not match");
             }
-            ChangeAuthorPersonValue( ap, p.PersonNo, p.NameCN, AuthorPersonStatus.CONFIRM );
+            ChangeAuthorPersonValue( ap, p.PersonNo, p.NameCN, CandidateStatus.CONFIRM );
         }
-        private void ChangeAuthorPersonValue(Author_Person ap, string PresonNo, string  Name, AuthorPersonStatus status)
+        private void ChangeAuthorPersonValue(Author_Person ap, string PresonNo, string  Name, CandidateStatus status)
         {
             ap.PersonNo = PresonNo;
             ap.Name = Name;
@@ -297,6 +298,6 @@ namespace PaperRecognize.Repository
                 .ToList();
             return list;
         }
-
+        */
     }
 }

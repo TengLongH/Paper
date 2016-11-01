@@ -8,6 +8,9 @@ using PaperRecognize.DTOs.PaperDTO;
 
 namespace PaperRecognize.Business.LookupPaper
 {
+    /// <summary>
+    /// 使用一些关键字如论文名，作者名，院系等搜索论文的类
+    /// </summary>
     public class Lookup
     {
         private static string[] paperNames;
@@ -15,6 +18,9 @@ namespace PaperRecognize.Business.LookupPaper
         private static string[] departs;
         private static SearchHelper helper;
         private static DBModel context;
+        /// <summary>
+        /// 静态构造函数，初始化各个参数
+        /// </summary>
         static Lookup(){
 
             helper = new SearchHelper();
@@ -31,7 +37,11 @@ namespace PaperRecognize.Business.LookupPaper
                 paperNames[i] = nameClasses[i].PaperName;
             }
         }
-
+        /// <summary>
+        /// 用论文名搜索论文
+        /// </summary>
+        /// <param name="name">论文名</param>
+        /// <returns>搜索到的论文列表</returns>
         public static List<GetOnePaperDTO> LookupPaperByName(string name)
         {
             string[] result = helper.Search( name, paperNames, 10, (float)0.5 );

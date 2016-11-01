@@ -9,7 +9,7 @@ namespace PaperRecognize.DTOs.PaperDTO
     {
         public GetOnePaperDTO()
         {
-            Authors = new List<GetOneAuthorDTO>();
+            //Authors = new List<GetOneAuthorDTO>();
         }
         public int Id { get; set; }
         public string AuthorsShort { get; set; }
@@ -20,7 +20,7 @@ namespace PaperRecognize.DTOs.PaperDTO
         public string PaperName { get; set; }
         public string EmailAddress { get; set; }
         public DateTime? PublishDate { get; set; }
-        public virtual List<GetOneAuthorDTO> Authors { get; set; }
+        //public virtual List<GetOneAuthorDTO> Authors { get; set; }
     }
 
 }

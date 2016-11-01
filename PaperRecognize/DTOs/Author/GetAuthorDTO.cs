@@ -7,11 +7,11 @@ namespace PaperRecognize.DTOs.Author
 {
     public class GetAuthorDTO
     {
-        public int Id { get; set; }
+        public int AuthorId { get; set; }
+        public string PaperName { get; set; }
         public int? PaperId { get; set; }
-        public int? Ordinal { get; set; }
-        public string NameEN { get; set; }
-        public string NameENAbbr { get; set; }
-        public string Department { get; set; }
+        public string AuthorName { get; set; }
+        public int SystemCandidateCount { get; set; }
+
     }
 }
