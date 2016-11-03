@@ -1,100 +1,97 @@
 ﻿<!DOCTYPE html>
-<html ng-app="ngloginApp">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-	<meta charset="utf-8" />
-    <script src="../Scripts/jquery-3.1.0.js"></script>
-    <script src="../Scripts/bootstrap.js"></script>
-    <script src="../Scripts/angular.js"></script>
-    <link href="../Content/bootstrap.css" rel="stylesheet" />
-    <link href="Login.css" rel="stylesheet"/>
-
-    <script>
-        var loginApp = angular.module('ngloginApp', []);
-        loginApp.controller('ngLoginCtrl',function($scope, $http) {
-            $scope.loginData = null;
-
-            $scope.login = function () {
-
-                if ($scope.loginData.Role == "0" || $scope.loginData.Role == "1") {
-                    $http.post("http://localhost:61355/api/login", $scope.loginData).success(
-                        function(response) {
-                            if (response.toString() == "common") {
-                                self.location = "userPaper/UserPaperMain.html";
-                            } else if (response.toString() == "depart") {
-                                self.location = "adminPaper/AdminPaperMain.html";
-                            } else if (response.toString() == "wrong") {
-                                alert("请输入正确的用户名或密码");
-                            } else {
-                                alert( response );
-                            }
-                        }
-                    ).error(
-                        function() {
-                            alert("通信错误！请检查您的网络！");
-                        }
-                    );
-                } else {
-                    alert("此功能尚未开启！请等待攻城狮添加！");
-                }
-
-                
-            }
-        });
-    </script>
-
-</head>
-<body ng-controller="ngLoginCtrl">
-    <div id="content">
-        <div id="contentHeader">
-            <h2>Login</h2>
-        </div>
-
-        <div id="contentBody">
-            <form class="form-horizontal">
-                <fieldset>
-                    <label class="control-label">用户名：</label><br/>
-                    <input name="username" ng-model="loginData.name" type="text" class="form-control" placeholder="请输入您的用户名"/>
-                    <br/>
-                    <br/>
-                    <label class="control-label">密码：</label><br/>
-                    <input name="password" ng-model="loginData.password" type="password" class="form-control" placeholder="请输入密码"/>
-                    <br/>
-                    <br/>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <label>
-                                <input ng-model="loginData.Role" type="radio" name="roleRadios" id="commonRadios" value="0" checked=""/>
-                                Common
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>
-                                <input ng-model="loginData.Role" type="radio" name="roleRadios" id="departRadios" value="1"/>
-                                Depart
-                            </label>
-                        </div>
-                        <div class="col-lg-4">
-                            <label>
-                                <input ng-model="loginData.Role" type="radio" name="roleRadios" id="schoolRadios" value="2"/>
-                                School
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-
-                {{loginData}}
-
-            </form>
-        </div>
-
-
-
-        <div id="contentFooter">
-            <a ng-click="login()" class="btn btn-primary btn-lg">登录</a>
-        </div>
-
-    </div>
-</body>
+<html ng-app="ngLoginApp">
+	<head>
+		<meta charset="utf-8" />
+		<title>PaperRecognize</title>
+		<script type="text/javascript" src="JS/jquery-2.2.3.js" ></script>
+		<script type="text/javascript" src="JS/login.js" ></script>
+		<script type="text/javascript" src="JS/bootstrap.js"></script>
+		<script type="text/javascript" src="JS/angular-1.5.3/angular.js" ></script>
+		<link rel="stylesheet" href="CSS/login.css" />
+		<link rel="stylesheet" href="CSS/bootstrap.css" />
+		<link rel="stylesheet" href="CSS/cikonss.css" />
+		
+		
+	</head>
+	<body ng-controller="ngLoginCtrl">
+		
+		
+		<div class="container">
+			<div class="title">
+				<img class="img_small" src="img/Login/PaperRecognize_title.png" />
+				<img class="img_big" src="img/Login/PaperRecognize_title_big_988_137.png" />
+			</div>
+			<div class="input">
+				<!--IdInputBody-->
+				<div id="inputID" class="inputContainer">
+					<div class="inputBody">
+						<input ng-model="loginData.Name" id="ID" class="form-control" type="text" placeholder="ID" />
+					</div>
+					<div id="IDCheck" class="check">
+						<img id="IDCheckImg" src="img/Login/down.png" />
+					</div>
+				</div>
+				<!--PasswordInputBody-->
+				<div id="inputPassword" class="inputContainer">
+					<div class="inputBody">
+						<input ng-model="loginData.password" id="Password" class="form-control" type="password" placeholder="Password" />
+					</div>
+					<div id="PasswordCheck" class="check">
+						<img id="PasswordCheckImg" src="img/Login/down.png" />
+					</div>
+				</div>
+				<!--RoleInputBody-->
+				<div id="inputRole" class="inputContainer">
+					<div class="inputBody">
+						<div class="radio">
+          					<label>
+            					<input ng-model="loginData.role" type="radio" name="selectRole" id="optionsRadios1" value="common" checked="">
+            					Common
+          					</label>
+        				</div>
+        				<div class="radio">
+          					<label>
+            					<input ng-model="loginData.role" type="radio" name="selectRole" id="optionsRadios2" value="depart">
+            					Depart
+          					</label>
+        				</div>
+        				<div class="radio">
+          					<label>
+            					<input ng-model="loginData.role" type="radio" name="selectRole" id="optionsRadios2" value="school">
+            					School
+          					</label>
+        				</div>
+					</div>
+					<div id="roleCheck" class="check">
+						<img id="RoleCheckImg" src="img/Login/down.png" />
+					</div>
+				</div>
+				<div id="getStart" class="btnStart">
+					<div class="goToIndex" ng-click="login()"><h2>Let's Start</h2></div>
+					<div class="goToIndexBtn" ng-click="login()"><span class="icon icon-mid"><span class="icon-arrowRight"></span></span></div>
+				</div>
+				
+				
+				<div class="selectBtn row">
+					<div id="selectID" class="selectBody col-lg-4">
+						<div class="selectLine"></div>
+						<div class="textID"><h4><strong>ID</strong></h4></div>
+					</div>
+					<div id="selectPassword" class="selectBody col-lg-4">
+						<div class="selectLine"></div>
+						<div class="textPassword"><h4><strong>Password</strong></h4></div>
+					</div>
+					<div id="selectRole" class="selectBody col-lg-4">
+						<div class="selectLine"></div>
+						<div class="textRole"><h4><strong>Role</strong></h4></div>
+					</div>
+				</div>
+				
+			</div>
+			
+			
+			
+			
+		</div>
+	</body>
 </html>

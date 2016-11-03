@@ -39,17 +39,18 @@ namespace PaperRecognize.Repository
         
         public List<GetAuthorDTO> GetSystemPushAuthor(string username)
         {
-            string sql = @"select p.Id as PaperId, p.PaperName as PaperName, a.Id as AuthorId, a.NameEN as AuthorName
+            string sql = @"select p.Id as PaperId, p.PaperName as PaperName, p.PublishDate as PublishDate, a.Id as AuthorId, a.NameEN as AuthorName
                            from Paper p, (select * from Author where id in ( 
-                           select AuthorId from Candidate where PersonNo={0} and status = {1} and Operator={2}) ) a
+                           select AuthorId from Candidate where PersonNo={0} and [status] = {1} and Operator={2}) ) a
                            where p.Id = a.PaperId";
             var authors = context.Database
                .SqlQuery<GetAuthorDTO>(sql.ToString(), username, (int)CandidateStatus.CHECK, "system")
                .ToList();
 
-            string systemPushCount = @"select Id from Candidate where AuthorId={0} and and Operator={1}";
-            foreach (var a in authors)
+            string systemPushCount = @"select Id from Candidate where AuthorId={0} and Operator={1}";
+            for (int i = 0; i < authors.Count; i++ )
             {
+                var a = authors[i];
                 a.SystemCandidateCount = context.Database
                     .SqlQuery<int>(systemPushCount, a.AuthorId, "system")
                     .Count();
@@ -229,9 +230,8 @@ namespace PaperRecognize.Repository
         /// <summary>
         /// 获取没有候选人的作者
         /// </summary>
-        /// <param name="page">数据分页显示，输入的页码</param>
         /// <returns>没有候选人的作者列表</returns>
-        public List<GetAuthorDTO> GetNoneCandidateAuthor( int page )
+        public List<GetAuthorDTO> GetNoneCandidateAuthor()
         {
             List<int> authorIds = NoneCandidatesAuthors();
             string ids = string.Join(",", authorIds.ToArray());
@@ -239,10 +239,7 @@ namespace PaperRecognize.Repository
             string sql = @"select p.Id as PaperId, p.PaperName as PaperName, a.Id as AuthorId, a.NameEN as AuthorName
                            from Paper p, (select * from Author where id in (" + ids + @") ) a
                            where p.Id = a.PaperId";
-            return context.Database.SqlQuery<GetAuthorDTO>(sql)
-                .Skip( (page -1) * pageSize )
-                .Take(pageSize)
-                .ToList();
+            return context.Database.SqlQuery<GetAuthorDTO>(sql).ToList();
         }
 
         /// <summary>

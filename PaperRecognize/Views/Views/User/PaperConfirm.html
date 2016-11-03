@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html ng-app="ngPaperConfirmApp">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../CSS/User/PaperConfirm.css"/>
+		<link rel="stylesheet" type="text/css" href="../../CSS/buttons.css"/>
+		
+		<script>
+			var paperConfirmApp = angular.module('ngPaperConfirmApp',[]);
+			paperConfirmApp.controller('ngPaperConfirmCtrl',function(){
+				
+			});
+		</script>
+		
+	</head>
+	<body ng-controller="ngPaperConfirmCtrl">
+		<div class="navTitle">
+			<h1>首页 》系统推送</h1>
+		</div>
+		<div class="cardContainer">
+			<div ng-repeat="paper in papers" class="card">
+				<div class="paperName">{{paper.PaperName}}</div>
+				<div class="authorName">Author Name : {{paper.AuthorName}}</div>
+				<div class="publishDate">Publish Date : {{paper.PublishDate}}</div>
+				<div class="cardLine"></div>
+				<div class="btnGroup">
+					<a ng-click="reject(paper.AuthorId)" class="reject button button-caution button-rounded">Reject</a>
+                    <div id="dialog"></div>
+					<a ng-click="accept()" class="accept button button-action button-rounded">Accept</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -57,10 +57,10 @@ namespace PaperRecognize.Controllers
         /// 获取认领平台的论文列表
         /// </summary>
         /// <returns>所有放在认领平台的论文列表</returns>
-        [Route("api/user/claim/get/{page}")]
-        public HttpResponseMessage GetClaimAuthors( int page )
+        [Route("api/user/claim/get/")]
+        public HttpResponseMessage GetClaimAuthors()
         {
-            return Util.toJson(repository.GetNoneCandidateAuthor( page ));
+            return Util.toJson(repository.GetNoneCandidateAuthor());
         }
 
         /// <summary>

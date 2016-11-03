@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html ng-app="ngMyPaperApp">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../CSS/User/MyPaper.css"/>
+		
+		<script>
+			var myPaperApp = angular.module('ngMyPaperApp',[]);
+			myPaperApp.controller('ngMyPaperCtrl',function(){
+				
+			});
+		</script>
+	</head>
+	<body ng-controller="ngMyPaperCtrl">
+		<div class="navTitle">
+			<h1>首页 》我的论文</h1>
+		</div>
+		<div class="cardContainer">
+			<div class="card" ng-repeat="paper in papers">
+				<div class="paperName">{{paper.PaperName}}</div>
+				<div class="cardLine"></div>
+				<div class="publishDate">Publish Date : {{paper.PublishDate}}</div>
+			</div>
+		</div>
+
+
+	</body>
+</html>

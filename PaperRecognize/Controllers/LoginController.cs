@@ -24,6 +24,15 @@ namespace PaperRecognize.Controllers
         /// <param name="dto">它有三个属性：用户名，密码和角色</param>
         /// <returns>如果登录成功返回用户的角色如 common普通用户，admin管理员。如果登录失败返回wrong</returns>
         [Route("api/login")]
+        /*
+        public HttpResponseMessage GetLogin()
+        {
+            var session = HttpContext.Current.Session;
+            session.Add("username", "1990042");
+            session.Add("role", 0 );
+            return null;
+        }
+        */
         public HttpResponseMessage PostLogin(LoginDTO dto)
         {
             if (null == dto.Name || null == dto.Password)
@@ -48,12 +57,8 @@ namespace PaperRecognize.Controllers
             var session = HttpContext.Current.Session;
             session.Add("username", user.Name);
             session.Add("role", user.Role);
-            
-            if (user.Role == 0)
-                return new HttpResponseMessage() { Content = new StringContent("common") };
-            if (user.Role == 1)
-                return new HttpResponseMessage() { Content = new StringContent("admin") };
-            return new HttpResponseMessage() { Content=new StringContent("wrong")};
+            return new HttpResponseMessage() { Content=new StringContent("success")};
         }
+
     }
 }

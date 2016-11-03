@@ -1,0 +1,200 @@
+body{
+	background: url(../img/Login/i.o_blur.jpg);
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+}
+
+.container{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-content: center;
+	align-items: center;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+	.img_small{
+		width: 400px;
+		height: auto;
+	}
+	.img_big{
+		display: none;
+	}
+}
+
+@media (min-width: 768px) {
+.img_small{
+		display: none;
+	}        
+	.img_big{
+		width: 80vw;
+		height: auto;
+	}
+}
+@media (min-width: 992px) {
+.img_small{
+		display: none;
+	}        
+	.img_big{
+		width: 80vx;
+		height: auto;
+	}
+  
+}
+@media (min-width: 1200px) {
+	.img_small{
+		display: none;
+	}     
+	   
+	.img_big{
+		width: 80vx;
+	}
+}
+
+
+
+p{
+	margin: 0;
+}
+
+
+.inputContainer{
+	width: 330px;
+	height: 43px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content:space-between;
+	align-content: center;
+}
+
+.input{
+	width: 330px;
+}
+
+.inputBody{
+	height: 50px;
+	width: 280px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-content: center;
+	align-items: center;
+}
+
+.inputBody>input{
+	height: 50px;
+}
+
+.radio{
+	color: white;
+}
+
+.check{
+	height: 50px;
+	width: 50px;
+	background-color: blue;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-content: center;
+}
+
+.Ok{
+	height: 50px;
+	width: 50px;
+	background-color: green;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-content: center;
+}
+
+.btnStart{
+	height: 50px;
+	width: 330px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-content: center;
+	
+}
+
+.goToIndex{
+	height: 50px;
+	width: 280px;
+	background-color: #33CC33;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+.goToIndex>h2{
+	margin: 0;
+}
+
+.goToIndexBtn{
+	height: 50px;
+	width: 50px;
+	background-color: #33CC33;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+}
+
+
+.selectBtn{
+	margin-top: 18px;
+}
+
+.selectBody{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-content: center;
+	align-items: center;
+}
+
+.selectBody:hover{
+	cursor: pointer;
+}
+
+
+h4>strong{
+	color: gray;
+}
+
+.selectLine{
+	height: 4px;
+	width: 78px;
+	background-color: gray;
+}
+
+#getStart:hover{
+	cursor: pointer;
+}

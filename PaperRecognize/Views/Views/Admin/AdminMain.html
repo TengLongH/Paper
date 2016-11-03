@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="ngAdminMainApp">
+	<head>
+		<meta charset="UTF-8">
+		<title>Admin</title>
+		<link rel="stylesheet" href="../../CSS/Admin/AdminMain.css" />
+		<link rel="stylesheet" href="../../CSS/card.css" />
+		<script type="text/javascript" src="../../JS/jquery-2.2.3.js" ></script>
+		<script type="text/javascript" src="../../JS/Admin/AdminMain.js" ></script>
+		<script type="text/javascript" src="../../JS/angular-1.5.3/angular.js" ></script>
+		<script type="text/javascript" src="../../JS/angular-1.5.3/angular-route.js" ></script>
+		<script>
+			var adminMainApp = angular.module("ngAdminMainApp",['ngRoute']);
+			adminMainApp.controller('ngAdminMainCtrl',function($scope, $http){
+				
+			})
+			.config(function($routeProvider){
+				$routeProvider
+				.when('/paperlist',{
+					templateUrl: '../../Views/Admin/PaperList.html'
+				})
+				.when('/papersearch',{
+					templateUrl: '../../Views/Admin/PaperSearch.html'
+				})
+				.when('/paperupdata',{
+					templateUrl: '../../Views/Admin/PaperUpdata.html'
+				})
+				.otherwise({
+					templateUrl: '../../Views/Admin/PaperList.html'
+				})
+			});
+		</script>
+	</head>
+	<body ng-controller="ngAdminMainCtrl">
+		<div class="mainContainer">
+			<div class="navTop">
+				<div class="Logo">
+					<h2>Paper</h2>
+					<h2>Recognize</h2>
+				</div>
+				<div class="navBody">
+					<img class="icon_menu" src="../../img/icons/svg/menu.svg" />
+				</div>
+			</div>
+			<div class="containerBottom">
+				<div class="sidr">
+					<div class="sidrBtnGroup">
+						<div class="linkBtn">
+							<a href="#/paperlist">待处理</a>
+						</div>
+						<div class="linkBtn">
+							<a href="#/papersearch">论文搜索</a>
+						</div>
+						<div class="linkBtn">
+							<a href="#/paperupdata">上传</a>
+						</div>
+					</div>
+				</div>
+				<div class="mainBody">
+					<ng-view></ng-view>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

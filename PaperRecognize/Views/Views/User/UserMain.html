@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html ng-app="ngUserMainApp">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="stylesheet" href="../../CSS/User/UserMain.css" />
+    <link rel="stylesheet" href="../../CSS/card.css" />
+    <link rel="stylesheet" href="../../CSS/jquery.dialogbox.css" />
+    <script type="text/javascript" src="../../JS/jquery-2.2.3.js"></script>
+    <script type="text/javascript" src="../../JS/User/UserMain.js"></script>
+    <script type="text/javascript" src="../../JS/jquery.dialogBox.js"></script>
+    <script type="text/javascript" src="../../JS/angular-1.5.3/angular.js"></script>
+    <script type="text/javascript" src="../../JS/angular-1.5.3/angular-route.js"></script>
+    <script>
+
+        //API
+        var myPaperGetUrl = "/api/user/mypaper/get";
+        var paperConfirmGetUrl = "/api/user/system/get";
+        var paperConfirmPostUrl = "";
+
+
+
+        var currentLine = 0;
+        //App and Route
+        var userMainApp = angular.module('ngUserMainApp', ["ngRoute"]);
+        userMainApp.controller('ngUserMainCtrl', function ($scope, $http) {
+
+        })
+        //MyPaperCtrl
+        .controller('ngMyPaperCtrl', function ($scope, $http) {
+
+            $http.get(myPaperGetUrl)
+            .success(function (response) {
+                $scope.papers = response;
+            })
+            .error(function () {
+                alert("通讯失败，请检查您的网络");
+            });
+
+
+
+            //分页
+            /*$scope.pageLength = papers.length.Math.ceil(5);
+            $scope.paperList = [];
+             $scope.getList = function(pageCount){
+                while(pageCount <= papers.length){
+                    $scope.paperList.push(papers[pageCount]);
+                }
+             }*/
+
+
+        })
+        //paperConfirmCtrl
+        .controller('ngPaperConfirmCtrl', function ($scope, $http) {
+
+
+            //get获取数据
+            $http.get(paperConfirmGetUrl)
+            .success(function (response) {
+                $scope.papers = response;
+            })
+            .error(function () {
+                alert("通讯失败了喵！难道是您的网络傲娇了喵？");
+            });
+
+            //reject方法
+            $scope.reject = function (AuthorId) {
+
+                $scope.postId = AuthorId;
+
+                //创建dialog
+                $("#dialog").dialogBox({
+                    type: 'correct',  //three type:'normal'(default),'correct','error',
+                    width: 300,
+                    height: 200,
+                    hasMask: true,
+                    hasClose: true,
+                    hasBtn: true,
+                    time: 3000,
+                    effect: 'sign',
+                    title: '确认',
+                    content: '确定要拒绝此论文吗？',
+                    confirm: function () {
+                        $http.post(paperConfirmPostUrl, $scope.postId)
+                        .success(function () {
+                            window.location.reload();
+                        })
+                        .error(function () {
+                            alert("通讯失败了喵！难道是您的网络傲娇了喵？")
+                        });
+                    }
+                });
+
+
+
+            }
+
+
+
+
+
+
+
+        })
+        .controller('ngPaperListCtrl', function ($scope, $http) {
+
+        })
+        .controller('ngPaperClaimCtrl', function ($scope, $http) {
+
+        })
+            .config(function ($routeProvider) {
+
+                $routeProvider
+				.when("/myPaper", {
+				    templateUrl: '../../Views/User/MyPaper.html',
+				    controller: 'ngMyPaperCtrl'
+				})
+				.when("/paperConfirm", {
+				    templateUrl: '../../Views/User/PaperConfirm.html',
+				    controller: 'ngPaperConfirmCtrl'
+				})
+				.when("/paperList", {
+				    templateUrl: '../../Views/User/PaperList.html',
+				    controller: 'ngPaperListCtrl'
+				})
+				.when("/paperClaim", {
+				    templateUrl: '../../Views/User/PaperClaim.html',
+				    controller: 'ngPaperClaimCtrl'
+				})
+				.otherwise({
+				    templateUrl: '../../Views/User/MyPaper.html',
+				    controller: 'ngMyPaperCtrl'
+				})
+
+            });
+    </script>
+</head>
+<body ng-controller="ngUserMainCtrl">
+    <div class="mainContainer">
+        <div class="navTop">
+            <div class="Logo">
+                <h2>Paper</h2>
+                <h2>Recognize</h2>
+            </div>
+            <div class="navBody">
+                <img class="icon_menu" src="../../img/icons/svg/menu.svg" />
+            </div>
+        </div>
+        <div class="containerBottom">
+            <div class="sidr">
+                <div class="sidrBtnGroup">
+                    <div class="linkBtn">
+                        <a href="#/myPaper">我的论文</a>
+                    </div>
+                    <div class="linkBtn">
+                        <a href="#/paperConfirm">系统推送</a>
+                    </div>
+                    <div class="linkBtn">
+                        <a href="#/paperList">已认领</a>
+                    </div>
+                    <div class="linkBtn">
+                        <a href="#/paperClaim">待认领</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mainBody">
+                <ng-view></ng-view>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
